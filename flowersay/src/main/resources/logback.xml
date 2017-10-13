@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<property name="CONTEXT_NAME" value="flowersay" />
+	<contextName>${CONTEXT_NAME}</contextName>
+	<property name="LOG_PATH" value="/home/work/flowersay/flowersayLog" />
+	<if condition='property("os.name").toUpperCase().contains("WINDOWS")'>
+		<then>
+			<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+				<encoder>
+					<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}---/%n-/%msg%n%n</pattern>
+					<!-- <charset>UTF-8</charset> --><!-- 如果控制台日志乱码就打开这个注释 -->
+				</encoder>
+			</appender>
+			<root level="INFO">
+				<appender-ref ref="STDOUT" />
+			</root>
+		</then>
+	</if>
+
+	<!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 -->
+	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${LOG_PATH}/flowersay-info.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/flowersay-info.log-%d{yyyy-MM-dd}.%i
+			</fileNamePattern>
+			<MaxHistory>10</MaxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<MaxFileSize>512MB</MaxFileSize>
+			</TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="flowersay-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/flowersay-err.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/flowersay-err.log-%d{yyyy-MM-dd}.%i</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>512MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+			<level>WARN</level>
+		</filter>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{25}:%L-[%X{gid}:%X{orderNo}] %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<logger name="com.duiya" level="INFO" additivity="true">
+		<appender-ref ref="file" />
+	</logger>
+
+	<logger name="com.duiya" level="INFO" additivity="true">
+		<appender-ref ref="flowersay-error" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>

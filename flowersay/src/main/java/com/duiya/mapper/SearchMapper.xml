@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duiya.dao.SearchDao">
+	<select id="searchFlower" parameterType="com.duiya.dto.FlowerSearchDto" resultType="map">
+		select
+		flower_id as flowerId,
+		flower_name as flowerName,
+		flower_price as flowerPrice,
+		flower_count as flowerCount,
+		flower_picture as flowerPicture,
+		flower_describe as flowerDescribe,
+		flower_classify as flowerClassify,
+		flower_state as flowerState
+		from t_flower
+		<where>
+			<if test="flowerId != null">
+				flower_id=#{flowerId}
+			</if>
+			<if test="flowerName != null">
+				and flower_name like concat(concat("%",#{flowerName}),"%")
+			</if>
+			<if test="flowerState != null">
+				and flower_state=#{flowerState}
+			</if>
+			<if test="flowerClassify != null">
+				and flower_classify=#{flowerClassify}
+			</if>
+			<if test="minFlowerPrice != null">
+				and flower_price <![CDATA[>=]]> #{minFlowerPrice}
+			</if>
+			<if test="maxFlowerPrice != null">
+				and theme_price <![CDATA[<=]]> #{maxFlowerPrice}
+			</if>
+		</where>
+		limit #{start},#{count}
+	</select>
+	
+	<select id="getFlowerCount" parameterType="com.duiya.dto.FlowerSearchDto" resultType="int">
+		select count(*) as allCount from t_flower
+		<where>
+			<if test="flowerId != null">
+				flower_id=#{flowerId}
+			</if>
+			<if test="flowerName != null">
+				and flower_name like concat(concat("%",#{flowerName}),"%")
+			</if>
+			<if test="flowerState != null">
+				and flower_state=#{flowerState}
+			</if>
+			<if test="flowerClassify != null">
+				and flower_classify=#{flowerClassify}
+			</if>
+			<if test="minFlowerPrice != null">
+				and flower_price <![CDATA[>=]]> #{minFlowerPrice}
+			</if>
+			<if test="maxFlowerPrice != null">
+				and theme_price <![CDATA[<=]]> #{maxFlowerPrice}
+			</if>
+		</where>
+		limit #{start},#{count}
+	</select>
+</mapper>

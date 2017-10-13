@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.duiya.dao.FlowerDao">
+	<insert id="addFlower" parameterType="com.duiya.dto.FlowerAddDto">
+		insert into 
+		t_flower(flower_id,flower_name,flower_price,flower_count,flower_picture,flower_describe,flower_classify,flower_state)
+		values(#{flowerId},#{flowerName},#{flowerPrice},#{flowerCount},#{flowerPicture},#{flowerDescribe},#{flowerClassify},#{flowerState})	
+	</insert>
+	
+	<update id="updateFlower" parameterType="com.duiya.dto.FlowerAddDto">
+		update t_flower set
+		flower_name=#{flowerName},
+		flower_price=#{flowerPrice},
+		flower_count=#{flowerCount},
+		flower_picture=#{flowerPicture},
+		flower_describe=#{flowerDescribe},
+		flower_classify=#{flowerClassify},
+		flower_state=#{flowerState}
+		where flower_id=#{flowerId}
+	</update>
+	
+	<update id="deleteFlower" parameterType="String">
+		update t_flower set flower_state=0 where flower_id=#{flowerId}
+	</update>
+
+</mapper>
