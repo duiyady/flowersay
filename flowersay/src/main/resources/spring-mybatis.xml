@@ -18,12 +18,17 @@
     					http://www.springframework.org/schema/util/spring-util-3.2.xsd">
     
     <context:component-scan base-package="com.duiya"/>
-    <!-- 引入配置文件 -->
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    	<property name="locations">
-    		<value>classpath:database.properties</value>
-    	</property>
-    </bean>
+   	<!-- 引入配置文件 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:database.properties</value>
+				<value>classpath:redis.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 为什么不用下面的配置呢？用下面的配置的话 整个spring的配置文件中 只能出现一个配置类 -->
+	<!-- <context:property-placeholder location="classpath:database.properties" ignore-unresolvable="true" /> -->
     
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="${driver}" />

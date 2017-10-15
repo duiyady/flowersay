@@ -8,15 +8,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 此类是是用来 读取properties 文件
- * @author joe蒋渊
+ * 用来读取默认的配置文件
+ * @author duiya
  *
  */
 
 public class PropertiesUtil {
 	private static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
-	private static InputStreamReader in;
-	private static Properties prop;
+	private static InputStreamReader defaultsetIn;
+	private static Properties defaultsetProp;
+	private static InputStreamReader alidayuIn;
+	private static Properties alidayuProp;
 
 	private PropertiesUtil() {
 		// 不能实例化
@@ -24,17 +26,33 @@ public class PropertiesUtil {
 
 	static {
 		try {
-			// 读取七牛云的配置文件
-			prop = new Properties();
-			in = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("qiniuyun.properties"), "UTF-8");
-			prop.load(in);
+			defaultsetProp = new Properties();
+			defaultsetIn = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("defaultset.properties"), "UTF-8");
+			defaultsetProp.load(defaultsetIn);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			logger.error("读取配置文件qiniuyun.properties出错", e);
+			logger.error("failed to read defaultset.properties", e);
 		} finally {
-			if (in != null) {
+			if (defaultsetIn != null) {
 				try {
-					in.close();
+					defaultsetIn.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		try {
+			alidayuProp = new Properties();
+			alidayuIn = new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("message.properties"), "UTF-8");
+			alidayuProp.load(alidayuIn);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.error("failed to read message.properties", e);
+		} finally {
+			if (alidayuIn != null) {
+				try {
+					alidayuIn.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -42,15 +60,22 @@ public class PropertiesUtil {
 			}
 		}
 	}
-
+	
 	/**
-	 * 获取 key 的值
+	 * 获得默认设置的值
 	 * @param key
 	 * @return
 	 */
-
-	public static String getValue(String key) {
-		return prop.getProperty(key);
+	public static String getDSValue(String key) {
+		return defaultsetProp.getProperty(key);
 	}
-
+	/**
+	 * 获取阿里大于的配置
+	 * @param key
+	 * @return
+	 */
+	public static String getALValue(String key) {
+		return alidayuProp.getProperty(key);
+	}
+	
 }

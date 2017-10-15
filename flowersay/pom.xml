@@ -148,13 +148,6 @@
 			<version>3.1.0</version>
 			<scope>provided</scope> <!-- 这个在编译和测试时有效 运行时无效 -->
 		</dependency>
-
-		<!-- 七牛云的 架包 -->
-		<dependency>
-			<groupId>com.qiniu</groupId>
-			<artifactId>qiniu-java-sdk</artifactId>
-			<version>[7.2.0, 7.2.99]</version>
-		</dependency>
 		
 		<!-- redis管理session  -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session-data-redis -->
@@ -162,6 +155,29 @@
     		<groupId>org.springframework.session</groupId>
     		<artifactId>spring-session-data-redis</artifactId>
     		<version>1.2.2.RELEASE</version>
+		</dependency>
+		
+		<!-- 文件上传 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+		
+		<!-- 手动导入的是 阿里大于的 SDK -->
+		<dependency>
+			<groupId>com.taobao</groupId>
+			<artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/aliyun-java-sdk-dysmsapi-1.0.0.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.taobao</groupId>
+			<artifactId>aliyun-java-sdk-core</artifactId>
+			<version>3.3.1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/aliyun-java-sdk-core-3.3.1.jar</systemPath>
 		</dependency>
 		
 		<dependency>

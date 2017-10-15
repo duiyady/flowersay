@@ -33,6 +33,13 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
+	
+	<!-- 配置文件上传 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8" />
+		<!-- 文件大小最大值5M -->
+		<property name="maxUploadSize" value="5242440" />
+	</bean>
 
 	<!-- 拦截器 -->
  	<!-- <mvc:interceptors>
