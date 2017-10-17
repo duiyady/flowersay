@@ -4,8 +4,8 @@
 <mapper namespace="com.duiya.dao.FlowerDao">
 	<insert id="addFlower" parameterType="com.duiya.dto.FlowerAddDto">
 		insert into 
-		t_flower(flower_id,flower_name,flower_price,flower_count,flower_picture,flower_describe,flower_classify,flower_state)
-		values(#{flowerId},#{flowerName},#{flowerPrice},#{flowerCount},#{flowerPicture},#{flowerDescribe},#{flowerClassify},#{flowerState})	
+		t_flower(flower_name,flower_price,flower_count,flower_picture,flower_describe,flower_classify,flower_state)
+		values(#{flowerName},#{flowerPrice},#{flowerCount},#{flowerPicture},#{flowerDescribe},#{flowerClassify},#{flowerState})	
 	</insert>
 	
 	<update id="updateFlower" parameterType="com.duiya.dto.FlowerAddDto">
@@ -20,7 +20,7 @@
 		where flower_id=#{flowerId}
 	</update>
 	
-	<update id="deleteFlower" parameterType="String">
+	<update id="deleteFlower" parameterType="int">
 		update t_flower set flower_state=0 where flower_id=#{flowerId}
 	</update>
 

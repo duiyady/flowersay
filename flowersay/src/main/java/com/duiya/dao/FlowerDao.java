@@ -15,7 +15,7 @@ public interface FlowerDao {
 	 * @param flowerId
 	 * @return
 	 */
-	public int deleteFlower(String flowerId);
+	public int deleteFlower(int flowerId);
 	
 	/**
 	 * 修改鲜花

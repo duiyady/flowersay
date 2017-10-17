@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.duiya.dao.AddressDao">
+	<insert id="addAddress" parameterType="com.duiya.dto.AddressAddDto">
+		insert into t_address(address_userid,address_receiver,address_phone,address_province,address_city,address_area,address_address)
+		valuse(#{addressUserid},#{addressReceiver},#{addressPhone},#{addressProvince},#{addressCity},#{addressArea},#{addressAddress})
+	</insert>
+	
+	<update id="updateAddress" parameterType="com.duiya.dto.AddressAddDto">
+		update t_address set
+		address_receiver=#{addressReceiver},
+		address_phone=#{addressPhone},
+		address_province=#{addressProvince},
+		address_city=#{addressCity},
+		address_area=#{addressArea},
+		address_address=#{addressAddress}
+		where address_id=#{addressId} and address_userid=#{addressUserid}
+	</update>
+	
+	<select id="getAllAddress" parameterType="int" resultType="map">
+		select
+		address_id as addressId,
+		address_receiver as addressReceiver,
+		address_phone as addressPhone,
+		address_province as addressProvince,
+		address_city as addressCity,
+		address_area as addressArea,
+		address_address as addressAddress
+		from t_address where address_userid=#{0}
+	</select>
+	
+	<delete id="deleteAddress" parameterType="int">
+		delete from t_address where address_id=#{0} and address_userid=#{1}
+	</delete>
+
+</mapper>

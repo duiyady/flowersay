@@ -31,4 +31,8 @@
         <property name="timeout" value="20000"/>
         <property name="poolConfig" ref="poolConfig"></property>
     </bean>
+    <!-- redisTemplate配置，redisTemplate是对Jedis的对redis操作的扩展，有更多的操作，封装使操作更便捷 -->
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+	</bean>
 </beans>  

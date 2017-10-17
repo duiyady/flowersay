@@ -13,7 +13,7 @@ import com.duiya.utils.DefaultSet;
  *
  */
 public class FlowerAddDto {
-	private String flowerId;//鲜花编号
+	private Integer flowerId;//鲜花编号
 	
 	@NotBlank
 	private String flowerName;//鲜花名字
@@ -33,21 +33,21 @@ public class FlowerAddDto {
 	@NotBlank
 	@Min(1)
 	@Max(4)
-	private Integer flowerClassify;//鲜花分类 1鲜花 2种子 3植株 4花束
+	private String flowerClassify;//鲜花分类 1鲜花 2种子 3植株 4花束
 	
 	private Integer flowerState = 1;//鲜花状态，默认为1在售，0下架
 
 	/**
 	 * @return the flowerId
 	 */
-	public String getFlowerId() {
+	public Integer getFlowerId() {
 		return flowerId;
 	}
 
 	/**
 	 * @param flowerId the flowerId to set
 	 */
-	public void setFlowerId(String flowerId) {
+	public void setFlowerId(Integer flowerId) {
 		this.flowerId = flowerId;
 	}
 
@@ -124,14 +124,14 @@ public class FlowerAddDto {
 	/**
 	 * @return the flowerClassify
 	 */
-	public Integer getFlowerClassify() {
+	public String getFlowerClassify() {
 		return flowerClassify;
 	}
 
 	/**
 	 * @param flowerClassify the flowerClassify to set
 	 */
-	public void setFlowerClassify(Integer flowerClassify) {
+	public void setFlowerClassify(String flowerClassify) {
 		this.flowerClassify = flowerClassify;
 	}
 
@@ -149,8 +149,8 @@ public class FlowerAddDto {
 		this.flowerState = flowerState;
 	}
 
-	public FlowerAddDto(String flowerId, String flowerName, Float flowerPrice, Integer flowerCount,
-			String flowerPicture, String flowerDescribe, Integer flowerClassify, Integer flowerState) {
+	public FlowerAddDto(Integer flowerId, String flowerName, Float flowerPrice, Integer flowerCount,
+			String flowerPicture, String flowerDescribe, String flowerClassify, Integer flowerState) {
 		super();
 		this.flowerId = flowerId;
 		this.flowerName = flowerName;
@@ -166,5 +166,15 @@ public class FlowerAddDto {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "FlowerAddDto [flowerId=" + flowerId + ", flowerName=" + flowerName + ", flowerPrice=" + flowerPrice
+				+ ", flowerCount=" + flowerCount + ", flowerPicture=" + flowerPicture + ", flowerDescribe="
+				+ flowerDescribe + ", flowerClassify=" + flowerClassify + ", flowerState=" + flowerState + "]";
+	}
+
 }

@@ -25,7 +25,7 @@ public class FlowerServiceImpl implements FlowerService {
 		return true;
 	}
 
-	public boolean deleteFlower(String flowerId) {
+	public boolean deleteFlower(int flowerId) {
 		int deleteResult = flowerDao.deleteFlower(flowerId);
 		if (deleteResult <= 0) {
 			return false;

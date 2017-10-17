@@ -15,7 +15,7 @@ public interface FlowerService {
 	 * @param flowerId
 	 * @return
 	 */
-	public boolean deleteFlower(String flowerId);
+	public boolean deleteFlower(int flowerId);
 	
 	/**
 	 * 更新鲜花

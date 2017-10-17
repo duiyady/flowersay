@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.duiya.dao.ShopcarDao">
+	<insert id="addShopcar" parameterType="int">
+		insert into t_shopcar(user_id,flower_id,shopcar_count) values (#{0},#{1},#{2})
+	</insert>
+	
+	<delete id="deleteShopcar" parameterType="int">
+		delete from t_shopcar where user_id=#{0} and shopcar_id=#{1}
+	</delete>
+	
+	<update id="updateShopcar" parameterType="int">
+		update t_shopcar set shopcar_count=#{0} where user_id=#{1} and shopcar_id=#{2}
+	</update>
+
+</mapper>

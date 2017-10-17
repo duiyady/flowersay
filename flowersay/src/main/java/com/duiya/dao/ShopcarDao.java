@@ -1,6 +1,6 @@
-package com.duiya.service;
+package com.duiya.dao;
 
-public interface ShopcarService {
+public interface ShopcarDao {
 	/**
 	 * 添加购物车
 	 * @param userId
@@ -8,14 +8,14 @@ public interface ShopcarService {
 	 * @param count
 	 * @return
 	 */
-	boolean addShopcar(int userId, int flowerId, int count);
+	int addShopcar(int userId, int flowerId, int count);
 	/**
 	 * 删除购物车
 	 * @param userId
 	 * @param shopcarId
 	 * @return
 	 */
-	boolean deleteShopcar(int userId, int shopcarId);
+	int deleteShopcar(int userId, int shopcarId);
 	/**
 	 * 更新购物车
 	 * @param userId
@@ -23,6 +23,6 @@ public interface ShopcarService {
 	 * @param count
 	 * @return
 	 */
-	boolean updateShopcar(int userId, int shopcarId, int count);
+	int updateShopcar(int count,int userId, int shopcarId);
 
 }

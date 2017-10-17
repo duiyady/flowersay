@@ -74,4 +74,16 @@ public class CommonUtil {
 		jo.put("data", data);
 		return jo;
 	}
+	
+	/**
+	 * 用户未登录错误
+	 * @return
+	 */
+	public static JSONObject constructNoUserResponse() {
+		JSONObject jo = new JSONObject();
+		jo.put("code", EnumUtil.NOT_LOGIN);
+		jo.put("msg", "用户未登录");
+		jo.put("data", null);
+		return jo;
+	}
 }

@@ -6,24 +6,43 @@ import com.duiya.utils.DefaultSet;
 
 
 public class UserRegistDto {
-	private String userId;
+	private Integer userId;
 	@NotBlank
-	private String username;//用户名
+	private String username;//用户昵称
 	@NotBlank
 	private String password;//密码
 	@NotBlank
-	private String phone;//电话号码
-	private String picture = DefaultSet.DEFAULT_PICTURE;//头像
+	private String userphone;//电话号码也是账号
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "UserRegistDto [userId=" + userId + ", username=" + username + ", password=" + password + ", userphone="
+				+ userphone + ", picture=" + picture + "]";
+	}
+	public UserRegistDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public UserRegistDto(Integer userId, String username, String password, String userphone, String picture) {
+		super();
+		this.userId = userId;
+		this.username = username;
+		this.password = password;
+		this.userphone = userphone;
+		this.picture = picture;
+	}
 	/**
 	 * @return the userId
 	 */
-	public String getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 	/**
 	 * @param userId the userId to set
 	 */
-	public void setUserId(String userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 	/**
@@ -51,16 +70,16 @@ public class UserRegistDto {
 		this.password = password;
 	}
 	/**
-	 * @return the phone
+	 * @return the userphone
 	 */
-	public String getPhone() {
-		return phone;
+	public String getUserphone() {
+		return userphone;
 	}
 	/**
-	 * @param phone the phone to set
+	 * @param userphone the userphone to set
 	 */
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setUserphone(String userphone) {
+		this.userphone = userphone;
 	}
 	/**
 	 * @return the picture
@@ -74,24 +93,6 @@ public class UserRegistDto {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "UserRegistDto [userId=" + userId + ", username=" + username + ", password=" + password + ", phone="
-				+ phone + ", picture=" + picture + "]";
-	}
-	public UserRegistDto(String userId, String username, String password, String phone, String picture) {
-		super();
-		this.userId = userId;
-		this.username = username;
-		this.password = password;
-		this.phone = phone;
-		this.picture = picture;
-	}
-	public UserRegistDto() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	}
+	private String picture = DefaultSet.DEFAULT_PICTURE;//头像
+	
+}

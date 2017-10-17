@@ -8,65 +8,39 @@ import javax.validation.constraints.Min;
  *
  */
 public class FlowerSearchDto {
-	private String flowerId;//鲜花编号，若有这个选线则变成了精确查找
-	private Integer flowerClassify;//鲜花分类
+	private Integer flowerId;//鲜花编号，若有这个选线则变成了精确查找
+	private String flowerClassify;//鲜花分类
 	private Integer flowerState;//鲜花状态
 	private String flowerNname;//鲜花名字
 	private Float minFlowerPrice;//鲜花最低价格
 	private Float maxFlowerPrice;//鲜花最高价格
 	@Min(1)
-	private Integer page = 1;//第几页
+	private int page = 1;//第几页
 	@Min(1)
-	private Integer count = 1;//每页显示几条数据
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "FlowerSearchDto [flowerId=" + flowerId + ", flowerClassify=" + flowerClassify + ", flowerState="
-				+ flowerState + ", flowerNname=" + flowerNname + ", minFlowerPrice=" + minFlowerPrice
-				+ ", maxFlowerPrice=" + maxFlowerPrice + ", page=" + page + ", count=" + count + ", start=" + start
-				+ "]";
-	}
-	public FlowerSearchDto() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public FlowerSearchDto(String flowerId, Integer flowerClassify, Integer flowerState, String flowerNname,
-			Float minFlowerPrice, Float maxFlowerPrice, Integer page, Integer count, int start) {
-		super();
-		this.flowerId = flowerId;
-		this.flowerClassify = flowerClassify;
-		this.flowerState = flowerState;
-		this.flowerNname = flowerNname;
-		this.minFlowerPrice = minFlowerPrice;
-		this.maxFlowerPrice = maxFlowerPrice;
-		this.page = page;
-		this.count = count;
-		this.start = start;
-	}
+	private int count = 1;//每页显示几条数据
+	private int start = 0;// 起始查询条数
 	/**
 	 * @return the flowerId
 	 */
-	public String getFlowerId() {
+	public Integer getFlowerId() {
 		return flowerId;
 	}
 	/**
 	 * @param flowerId the flowerId to set
 	 */
-	public void setFlowerId(String flowerId) {
+	public void setFlowerId(Integer flowerId) {
 		this.flowerId = flowerId;
 	}
 	/**
 	 * @return the flowerClassify
 	 */
-	public Integer getFlowerClassify() {
+	public String getFlowerClassify() {
 		return flowerClassify;
 	}
 	/**
 	 * @param flowerClassify the flowerClassify to set
 	 */
-	public void setFlowerClassify(Integer flowerClassify) {
+	public void setFlowerClassify(String flowerClassify) {
 		this.flowerClassify = flowerClassify;
 	}
 	/**
@@ -120,25 +94,25 @@ public class FlowerSearchDto {
 	/**
 	 * @return the page
 	 */
-	public Integer getPage() {
+	public int getPage() {
 		return page;
 	}
 	/**
 	 * @param page the page to set
 	 */
-	public void setPage(Integer page) {
+	public void setPage(int page) {
 		this.page = page;
 	}
 	/**
 	 * @return the count
 	 */
-	public Integer getCount() {
+	public int getCount() {
 		return count;
 	}
 	/**
 	 * @param count the count to set
 	 */
-	public void setCount(Integer count) {
+	public void setCount(int count) {
 		this.count = count;
 	}
 	/**
@@ -153,5 +127,32 @@ public class FlowerSearchDto {
 	public void setStart(int start) {
 		this.start = start;
 	}
-	private int start;// 起始查询条数
+	public FlowerSearchDto(Integer flowerId, String flowerClassify, Integer flowerState, String flowerNname,
+			Float minFlowerPrice, Float maxFlowerPrice, int page, int count, int start) {
+		super();
+		this.flowerId = flowerId;
+		this.flowerClassify = flowerClassify;
+		this.flowerState = flowerState;
+		this.flowerNname = flowerNname;
+		this.minFlowerPrice = minFlowerPrice;
+		this.maxFlowerPrice = maxFlowerPrice;
+		this.page = page;
+		this.count = count;
+		this.start = start;
+	}
+	public FlowerSearchDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "FlowerSearchDto [flowerId=" + flowerId + ", flowerClassify=" + flowerClassify + ", flowerState="
+				+ flowerState + ", flowerNname=" + flowerNname + ", minFlowerPrice=" + minFlowerPrice
+				+ ", maxFlowerPrice=" + maxFlowerPrice + ", page=" + page + ", count=" + count + ", start=" + start
+				+ "]";
+	}
+	
 }

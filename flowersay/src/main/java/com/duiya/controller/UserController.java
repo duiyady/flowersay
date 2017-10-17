@@ -43,10 +43,10 @@ public class UserController {
 	 */
 	@RequestMapping(value = "login", method=RequestMethod.POST)
 	@ResponseBody
-	public JSONObject login(@RequestParam(value = "username",required = true)String username,
+	public JSONObject login(@RequestParam(value = "userphone",required = true)String userphone,
 			@RequestParam(value = "password",required = true)String password,
 			HttpSession session) {
-		User user = userService.login(username, password);
+		User user = userService.login(userphone, password);
 		if(user != null) {
 			session.setAttribute("user", user);
 			//管理员
@@ -73,7 +73,6 @@ public class UserController {
 			String msg = bindingResult.getFieldError().getField() + ":" + bindingResult.getFieldError().getDefaultMessage();
 			return CommonUtil.constructResponse(EnumUtil.ARG_ERROR, msg, null);
 		}
-		user.setUserId(StringUtil.getUuid());
 		boolean result = userService.regist(user);
 		if(result) {
 			return CommonUtil.constructOKResponse("添加成功", null);

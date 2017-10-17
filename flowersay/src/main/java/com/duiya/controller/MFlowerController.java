@@ -47,7 +47,6 @@ public class MFlowerController {
 			String msg = bindingResult.getFieldError().getField() + ":" + bindingResult.getFieldError().getDefaultMessage();
 			return CommonUtil.constructResponse(EnumUtil.ARG_ERROR, msg, null);
 		}
-		flower.setFlowerId(StringUtil.getUuid());
 		logger.info("invoke--------------------mflower/addFlower?flower:"+flower);
 		boolean flag = false;
 		try {
@@ -70,7 +69,7 @@ public class MFlowerController {
 	 */
 	@RequestMapping(value="deleteFlower", method=RequestMethod.POST)
 	@ResponseBody
-	public JSONObject deleteFlower(@RequestParam(value="flowerId",required=true) String flowerId) {
+	public JSONObject deleteFlower(@RequestParam(value="flowerId",required=true) Integer flowerId) {
 		logger.info("invoke--------------------mflower/deleteFlower?flowerId:" + flowerId);
 		boolean flag = false;
 		try {
@@ -112,17 +111,5 @@ public class MFlowerController {
 			return CommonUtil.constructUnknownErrorResponse("修改失败");
 		}
 		return CommonUtil.constructOKResponse("修改成功", null);
-	}
-	
-	/**
-	 * 鲜花搜索接口，用户和管理员公用，在用户鲜花管理那里实现
-	 * @param flowerId
-	 * @return
-	 */
-	@RequestMapping(value="searchFlower", method=RequestMethod.POST)
-	@ResponseBody
-	public JSONObject searchFlower(@RequestParam(value="flowerId",required=true) String flowerId) {
-		
-		return null;
 	}
 }

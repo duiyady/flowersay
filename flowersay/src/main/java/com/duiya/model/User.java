@@ -2,7 +2,7 @@ package com.duiya.model;
 
 public class User {
 	private String username;//用户名
-	private String userId;//用户ID
+	private Integer userId;//用户ID
 	private String userpic;//用户图片地址
 	private Integer usergrade;//用户等级
 	/**
@@ -20,13 +20,13 @@ public class User {
 	/**
 	 * @return the userId
 	 */
-	public String getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 	/**
 	 * @param userId the userId to set
 	 */
-	public void setUserId(String userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 	/**
@@ -53,7 +53,7 @@ public class User {
 	public void setUsergrade(Integer usergrade) {
 		this.usergrade = usergrade;
 	}
-	public User(String username, String userId, String userpic, Integer usergrade) {
+	public User(String username, Integer userId, String userpic, Integer usergrade) {
 		super();
 		this.username = username;
 		this.userId = userId;
@@ -72,5 +72,5 @@ public class User {
 		return "User [username=" + username + ", userId=" + userId + ", userpic=" + userpic + ", usergrade=" + usergrade
 				+ "]";
 	}
-		
+	
 }

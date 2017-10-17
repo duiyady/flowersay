@@ -6,10 +6,10 @@
 		SELECT
 		user_id as userId,user_name as username,user_picture as userpic,user_grade as usergrade
 		from t_user where
-		user_name=#{0} AND user_password=#{1};
+		user_phone=#{0} AND user_password=#{1};
 	</select>
 	<insert id="regist" parameterType="com.duiya.dto.UserRegistDto">
-		insert into t_user(user_id,user_name,user_password,user_phone,user_grade,user_picture)
-		values(#{userId},#{username},#{password},#{phone},0,#{picture})
+		insert into t_user(user_phone,user_password,user_name,user_grade,user_picture)
+		values(#{username},#{password},#{userphone},0,#{picture})
 	</insert>
 </mapper>
