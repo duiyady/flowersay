@@ -1,9 +1,13 @@
 package com.duiya.model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String username;//用户名
+	private String userphone;//电话
 	private Integer userId;//用户ID
-	private String userpic;//用户图片地址
+	private String userPicture;//用户图片地址
 	private Integer usergrade;//用户等级
 	/**
 	 * @return the username
@@ -18,6 +22,18 @@ public class User {
 		this.username = username;
 	}
 	/**
+	 * @return the userphone
+	 */
+	public String getUserphone() {
+		return userphone;
+	}
+	/**
+	 * @param userphone the userphone to set
+	 */
+	public void setUserphone(String userphone) {
+		this.userphone = userphone;
+	}
+	/**
 	 * @return the userId
 	 */
 	public Integer getUserId() {
@@ -30,16 +46,16 @@ public class User {
 		this.userId = userId;
 	}
 	/**
-	 * @return the userpic
+	 * @return the userPicture
 	 */
-	public String getUserpic() {
-		return userpic;
+	public String getUserPicture() {
+		return userPicture;
 	}
 	/**
-	 * @param userpic the userpic to set
+	 * @param userPicture the userPicture to set
 	 */
-	public void setUserpic(String userpic) {
-		this.userpic = userpic;
+	public void setUserPicture(String userPicture) {
+		this.userPicture = userPicture;
 	}
 	/**
 	 * @return the usergrade
@@ -53,11 +69,12 @@ public class User {
 	public void setUsergrade(Integer usergrade) {
 		this.usergrade = usergrade;
 	}
-	public User(String username, Integer userId, String userpic, Integer usergrade) {
+	public User(String username, String userphone, Integer userId, String userPicture, Integer usergrade) {
 		super();
 		this.username = username;
+		this.userphone = userphone;
 		this.userId = userId;
-		this.userpic = userpic;
+		this.userPicture = userPicture;
 		this.usergrade = usergrade;
 	}
 	public User() {
@@ -69,8 +86,8 @@ public class User {
 	 */
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", userId=" + userId + ", userpic=" + userpic + ", usergrade=" + usergrade
-				+ "]";
+		return "User [username=" + username + ", userphone=" + userphone + ", userId=" + userId + ", userPicture="
+				+ userPicture + ", usergrade=" + usergrade + "]";
 	}
 	
-}
+	}

@@ -27,6 +27,14 @@ public class AlidayuSet {
 	 * 交易完成了
 	 */
 	public static String TemplateCode5;
+	/**
+	 * 注册验证
+	 */
+	public static String TemplateCode6;
+	/**
+	 * 找回密码
+	 */
+	public static String TemplateCode7;
 	static {
 		accessKeyId = PropertiesUtil.getALValue("accessKeyId");
 		accessKeySecret = PropertiesUtil.getALValue("accessKeySecret");
@@ -36,6 +44,8 @@ public class AlidayuSet {
 		TemplateCode3 = PropertiesUtil.getALValue("TemplateCode3");
 		TemplateCode4 = PropertiesUtil.getALValue("TemplateCode4");
 		TemplateCode5 = PropertiesUtil.getALValue("TemplateCode5");
+		TemplateCode6 = PropertiesUtil.getALValue("TemplateCode6");
+		TemplateCode7 = PropertiesUtil.getALValue("TemplateCode7");
 	}
 	
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.duiya.dao.OrderDao">
+	
+	<select id="getOrderlist" parameterType="com.duiya.dto.OrderSearchDto" resultType="map">
+		select
+		order_id as orderId,
+		order_mid as orderMId,
+		order_price as orderPrice
+		from t_order
+		where
+		user_id=#{userId} and order_state=#{orderState}
+		limit #{start},#{count}
+	</select>
+
+	<select id="getOrderlistCount" parameterType="com.duiya.dto.OrderSearchDto" resultType="int">
+		select
+		count(*)
+		from t_order
+		where
+		user_id=#{userId} and order_state=#{orderState}
+	</select>
+	
+	<select id="getOrderListF" parameterType="int" resultType="map">
+		select
+		t_orderlist.orderlist_count as flowerCount,
+		t_orderlist.orderlist_price as flowerPrice,
+		t_flower.flower_name as flowerName
+		from t_orderlist,t_flower
+		where t_flower.flower_id=t_orderlist.flower_id and t_orderlist.order_id=#{0}
+	</select>
+	
+	<insert id="insertOrder" parameterType="com.duiya.dto.OrderAddDto" useGeneratedKeys="true" keyProperty="orderId">
+		insert into t_order(order_mid, order_price, user_id, address_id, order_state, order_mess)
+		values (#{orderMId},#{orderPrice},#{userId},#{addressId},#{orderState},#{orderMess})
+	</insert>
+	
+	<insert id="inserOrderList" parameterType="com.duiya.dto.OrderListAddDto">
+		insert into t_orderlist(order_id, flower_id, orderlist_count, orderlist_price)
+		values(#{orderId},#{flowerId},#{orderlistCount},#{orderlistPrice})
+	</insert>
+	
+	<select id="getMState" parameterType="int" resultType="int">
+		select order_state from t_order where order_id=#{0}
+	</select>
+	
+	<update id="updateMState" parameterType="int">
+		update t_order set order_state=#{0} where order_id=#{1}
+	</update>
+	
+	<delete id="deleteOrder" parameterType="int">
+		delete from t_order where order_state=#{0},order_id=#{1},user_id=#{2}
+	</delete>
+
+</mapper>

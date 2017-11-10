@@ -1,5 +1,8 @@
 package com.duiya.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -60,7 +63,69 @@ public class SearchController {
 			logger.error("failed to search flower" + flowerSearchDto, e);
 			return CommonUtil.constructResponse(EnumUtil.DB_ERROR, "数据库错误", null);
 		}
+		System.out.println(flowerSearchDto.toString());
+		System.out.println(flowerPage.getAllCount());
 		return CommonUtil.constructResponse(EnumUtil.OK, "请求成功", flowerPage);
+	}
+	
+	/**
+	 * 获取鲜花的详细信息
+	 * @param flowerId
+	 * @return
+	 */
+	@RequestMapping(value="searchFlowerById", method=RequestMethod.POST)
+	@ResponseBody
+	public JSONObject searchFlowerById(@RequestParam(value="flowerId" ,required=true)Integer flowerId){
+		Map<String,Object> map = null;
+		try {
+			map = searchService.searchFlowerById(flowerId);
+			if(map == null) {
+				return CommonUtil.constructArgErrorResponse("参数错误");
+			}
+		}catch (Exception e) {
+			logger.error("failed to searchflower",e);
+			return CommonUtil.constructDbErrorResponse("查询失败");
+		}
+		return CommonUtil.constructOKResponse("成功", map);
+	}
+	/**
+	 * 获取鲜花测试接口
+	 * @param flowerId
+	 * @return
+	 */
+	@RequestMapping(value="searchFlowerTest", method=RequestMethod.POST)
+	@ResponseBody
+	public JSONObject searchFlowerTest(){
+		List<Map<String,Object>> list = null;
+		try {
+			list = searchService.searchFlowerTest();
+			if(list == null) {
+				return CommonUtil.constructArgErrorResponse("参数错误");
+			}
+		}catch (Exception e) {
+			logger.error("failed to searchflower",e);
+			return CommonUtil.constructDbErrorResponse("查询失败");
+		}
+		return CommonUtil.constructOKResponse("成功", list);
+	}
+	
+	/**
+	 * 首页展示的的三个 0最热 1最新 2打折
+	 * @param option
+	 * @return
+	 */
+	@RequestMapping(value="searchFlowerIndex",method=RequestMethod.POST)
+	@ResponseBody
+	public JSONObject searchFlowerIndex(@RequestParam(value="option",required=true)Integer option) {
+		logger.info("invoke--------------------search/searchFlowerIndex");
+		List<Map<String,Object>> list = null;
+		try {
+			list = searchService.searchFlowerIndex(option);
+		}catch (Exception e) {
+			logger.error("failed to searchIndex", e);
+			return CommonUtil.constructDbErrorResponse("获取失败");
+		}
+		return CommonUtil.constructOKResponse("获取成功", list);
 	}
 }
 

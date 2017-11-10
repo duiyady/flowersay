@@ -49,4 +49,12 @@ public class AddressServiceImpl implements AddressService{
 		return addressDao.getAllAddress(userId);
 	}
 
+	public Map<String, Object> getAddressById(int addressId, int userId) {
+		return addressDao.getAddressById(addressId, userId);
+	}
+
+	public Map<String, Object> getAddress(Integer userId) {
+		return addressDao.getAddress(userId);
+	}
+
 }

@@ -23,5 +23,9 @@
 	<update id="deleteFlower" parameterType="int">
 		update t_flower set flower_state=0 where flower_id=#{flowerId}
 	</update>
+	
+	<update id="reduceFlower">
+		update t_flower set flower_count=flower_count-#{1} where flower_count>#{1} and flower_id=#{0} 
+	</update>
 
 </mapper>

@@ -19,11 +19,11 @@ public class SearchServiceImpl implements SearchService {
 	private SearchDao searchDao;
 	
 	public PageModel searchFlower(FlowerSearchDto flowerSearchDto) {
-		List<Map<String,Object>> infoList = searchDao.searchFlower(flowerSearchDto);
 		int allCount = searchDao.getFlowerCount(flowerSearchDto);
-		if(infoList == null){
+		if(allCount == 0){
 			return null;
 		}
+		List<Map<String,Object>> infoList = searchDao.searchFlower(flowerSearchDto);
 		PageModel infoPage = new PageModel();
 		infoPage.setCount(infoList.size());
 		infoPage.setPage(flowerSearchDto.getPage());
@@ -31,6 +31,24 @@ public class SearchServiceImpl implements SearchService {
 		infoPage.setAllCount(allCount);
 		infoPage.setDataList(infoList);
 		return infoPage;
+	}
+
+	public Map<String, Object> searchFlowerById(int flowerId) {
+		return searchDao.searchFlowerById(flowerId);
+	}
+
+	public List<Map<String,Object>> searchFlowerTest() {
+		return searchDao.searchFlowerTest();
+	}
+
+	public List<Map<String, Object>> searchFlowerIndex(int option) {
+		if(option == 0) {
+			return searchDao.getMHot();
+		}else if(option == 1){
+			return searchDao.getMNew();
+		}else {
+			return searchDao.getDiscount();
+		}
 	}
 
 }

@@ -13,23 +13,17 @@
 		flower_state as flowerState
 		from t_flower
 		<where>
-			<if test="flowerId != null">
-				flower_id=#{flowerId}
-			</if>
-			<if test="flowerName != null">
-				and flower_name like concat(concat("%",#{flowerName}),"%")
-			</if>
-			<if test="flowerState != null">
-				and flower_state=#{flowerState}
+			<if test="message != null">
+				or flower_name like concat(concat("%",#{message}),"%")
+				or flower_describe like concat(concat("%",#{message}),"%")
+				or flower_classify like concat(concat("%",#{message}),"%")
+				or flower_use like concat(concat("%",#{message}),"%")
 			</if>
 			<if test="flowerClassify != null">
-				and flower_classify=#{flowerClassify}
+				or flower_classify=#{flowerClassify}
 			</if>
-			<if test="minFlowerPrice != null">
-				and flower_price <![CDATA[>=]]> #{minFlowerPrice}
-			</if>
-			<if test="maxFlowerPrice != null">
-				and theme_price <![CDATA[<=]]> #{maxFlowerPrice}
+			<if test="flowerUse != null">
+				or flower_use=#{flowerUse}
 			</if>
 		</where>
 		limit #{start},#{count}
@@ -38,25 +32,80 @@
 	<select id="getFlowerCount" parameterType="com.duiya.dto.FlowerSearchDto" resultType="int">
 		select count(*) as allCount from t_flower
 		<where>
-			<if test="flowerId != null">
-				flower_id=#{flowerId}
-			</if>
-			<if test="flowerName != null">
-				and flower_name like concat(concat("%",#{flowerName}),"%")
-			</if>
-			<if test="flowerState != null">
-				and flower_state=#{flowerState}
+			<if test="message != null">
+				or flower_name like concat(concat("%",#{message}),"%")
+				or flower_describe like concat(concat("%",#{message}),"%")
+				or flower_classify like concat(concat("%",#{message}),"%")
+				or flower_use like concat(concat("%",#{message}),"%")
 			</if>
 			<if test="flowerClassify != null">
-				and flower_classify=#{flowerClassify}
+				or flower_classify=#{flowerClassify}
 			</if>
-			<if test="minFlowerPrice != null">
-				and flower_price <![CDATA[>=]]> #{minFlowerPrice}
-			</if>
-			<if test="maxFlowerPrice != null">
-				and theme_price <![CDATA[<=]]> #{maxFlowerPrice}
+			<if test="flowerUse != null">
+				or flower_use=#{flowerUse}
 			</if>
 		</where>
-		limit #{start},#{count}
+	</select>
+	
+	<select id="searchFlowerById" parameterType="int" resultType="map">
+		select
+		flower_id as flowerId,
+		flower_picture as flowerPicture,
+		flower_name as flowerName,
+		flower_price as flowerPrice,
+		flower_discountprice as flowerDiscountPrice,
+		flower_addtime as flowerAddtime,
+		flower_count as flowerCount,
+		flower_norms as flowerNorms,
+		flower_state as flowerState,
+		flower_use as flowerUse,
+		flower_describe as flowerDescribe
+		from t_flower where flower_id=#{0}
+	</select>
+	
+	<select id="searchFlowerTest" resultType="map">
+		select
+		flower_id as flowerId,
+		flower_picture as flowerPicture,
+		flower_name as flowerName,
+		flower_price as flowerPrice,
+		flower_discountprice as flowerDiscountPrice
+		from t_flower
+	</select>
+
+	<select id="getMHot" resultType="map">
+		select
+		flower_id as flowerId,
+		flower_picture as flowerPicture,
+		flower_name as flowerName,
+		flower_price as flowerPrice,
+		flower_discountprice as flowerDiscountPrice
+		from t_flower where flower_state=1
+		order by flower_sales desc
+		limit 0,5
+	</select>
+		
+	<select id="getMNew" resultType="map">
+		select
+		flower_id as flowerId,
+		flower_picture as flowerPicture,
+		flower_name as flowerName,
+		flower_price as flowerPrice,
+		flower_discountprice as flowerDiscountPrice
+		from t_flower where flower_state=1
+		order by flower_addtime desc
+		limit 0,5
+	</select>
+	
+	<select id="getDiscount" resultType="map">
+		select
+		flower_id as flowerId,
+		flower_picture as flowerPicture,
+		flower_name as flowerName,
+		flower_price as flowerPrice,
+		flower_discountprice as flowerDiscountPrice
+		from t_flower
+		where flower_state=1 and flower_discountprice is not null
+		limit 0,5
 	</select>
 </mapper>

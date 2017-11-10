@@ -26,7 +26,7 @@
 	
     <!-- redis连接工厂 -->
     <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-        <property name="hostName" value="127.0.0.1"/>
+        <property name="hostName" value="123.207.243.135"/>
         <property name="port" value="6379"/>
         <property name="timeout" value="20000"/>
         <property name="poolConfig" ref="poolConfig"></property>

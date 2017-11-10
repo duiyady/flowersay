@@ -19,4 +19,30 @@ public interface SearchDao {
 	 * @return
 	 */
 	public int getFlowerCount(FlowerSearchDto flowerSearchDto);
+	/**
+	 * 获取鲜花的详细信息
+	 * @param flowerId
+	 * @return
+	 */
+	public Map<String, Object> searchFlowerById(int flowerId);
+	/**
+	 * 测试
+	 * @return
+	 */
+	public List<Map<String,Object>> searchFlowerTest();
+	/**
+	 * 获取最热
+	 * @return
+	 */
+	public List<Map<String, Object>> getMHot();
+	/**
+	 * 获取最新
+	 * @return
+	 */
+	public List<Map<String, Object>> getMNew();
+	/**
+	 * 获取打折
+	 * @return
+	 */
+	public List<Map<String, Object>> getDiscount();
 }

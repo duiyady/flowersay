@@ -21,13 +21,13 @@ import java.util.Set;
 @Component
 public class RedisCache {
 	public final static String CAHCENAME = "cache";// 缓存名
-	public final static int CAHCETIME = 60;// 默认缓存时间
+	public final static int CAHCETIME = 300;// 默认缓存时间
 
 	@Autowired
 	private RedisTemplate<String, String> redisTemplate;
 
 	/**
-	 * 放入缓存 默认过期 60 秒
+	 * 放入缓存 默认过期 300 秒
 	 * 
 	 * @param key
 	 * @param obj
@@ -63,7 +63,7 @@ public class RedisCache {
 	}
 
 	/**
-	 * 放入List 缓存 默认过期60秒
+	 * 放入List 缓存 默认过期300秒
 	 * 
 	 * @param key
 	 * @param objList

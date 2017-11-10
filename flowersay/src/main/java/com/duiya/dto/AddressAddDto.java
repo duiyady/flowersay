@@ -12,6 +12,12 @@ public class AddressAddDto {
 	private String addressPhone;//这个地址的联系电话
 	@NotBlank
 	private String addressProvince;//这个地址的省
+	@NotBlank
+	private String addressCity;//这个地址的城市
+	@NotBlank
+	private String addressArea;//这个地址的区
+	@NotBlank
+	private String addressAddress;//这个地址的详细地址
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -134,11 +140,5 @@ public class AddressAddDto {
 	public void setAddressAddress(String addressAddress) {
 		this.addressAddress = addressAddress;
 	}
-	@NotBlank
-	private String addressCity;//这个地址的城市
-	@NotBlank
-	private String addressArea;//这个地址的区
-	@NotBlank
-	private String addressAddress;//这个地址的详细地址
 	
 }

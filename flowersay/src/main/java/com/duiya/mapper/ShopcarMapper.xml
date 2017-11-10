@@ -13,5 +13,25 @@
 	<update id="updateShopcar" parameterType="int">
 		update t_shopcar set shopcar_count=#{0} where user_id=#{1} and shopcar_id=#{2}
 	</update>
-
+	
+	<select id="getShopcar" parameterType="int" resultType="map">
+		select 
+		shopcar.shopcar_id as shopcarId,
+		shopcar.flower_id as flowerId,
+		shopcar.shopcar_count as flowerCount,
+		flower.flower_name as flowerName,
+		flower.flower_price as flaowerPrice,
+		flower.flower_discountprice as dFlowerPrice,
+		flower.flower_picture as flowerPicture
+		from t_shopcar shopcar,t_flower flower
+		where flower.flower_id = shopcar.flower_id and shopcar.user_id=#{0}
+	</select>
+	
+	<select id="shopcarCount" parameterType="int" resultType="int">
+		select count(*) from t_shopcar where user_id=#{0}
+	</select>
+	
+	<select id="addTemp" parameterType="int" resultType="int">
+		select count(*) from t_shopcar where user_id=#{0} and flower_id=#{1}
+	</select>
 </mapper>

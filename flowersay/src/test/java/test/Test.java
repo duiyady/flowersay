@@ -1,9 +1,18 @@
 package test;
 
-import com.duiya.utils.StringUtil;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Test {
-public static void main(String[] args) {
-	System.out.println(StringUtil.getUuid());
-}
+	public static void main(String[] args) {
+		List<String> list = new LinkedList<String>();
+		list.add("a");
+		list.add("b");
+		for(String s : list) {
+			System.out.println(s);
+			if("a".equals(s)) {
+				break;
+			}
+		}
+	}
 }

@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 public class StringUtil {
 	/**
-	 * 一个String的工具类
+	 * 判断String是不是空
 	 * 
 	 * @param str
 	 * @return

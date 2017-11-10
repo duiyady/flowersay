@@ -33,4 +33,19 @@ public interface AddressService {
 	 * @return
 	 */
 	public List<Map<String,Object>> getAllAddress(int userId);
+
+	/**
+	 * 通过编号获取地址
+	 * @param addressId
+	 * @param userId
+	 * @return
+	 */
+	public Map<String, Object> getAddressById(int addressId, int userId);
+
+	/**
+	 * 获取用户的第一个收货地址
+	 * @param userId
+	 * @return
+	 */
+	public Map<String, Object> getAddress(Integer userId);
 }

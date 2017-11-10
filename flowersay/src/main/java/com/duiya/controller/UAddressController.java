@@ -130,7 +130,7 @@ public class UAddressController {
 		address.setAddressUserid(user.getUserId());
 		boolean flag = false;
 		try {
-			flag = addressService.addAddress(address);
+			flag = addressService.updateAddress(address);
 			if(flag == false) {
 				logger.error("failed to add address :" + address);
 				return CommonUtil.constructDbErrorResponse("数据库错误");
@@ -166,5 +166,43 @@ public class UAddressController {
 			return CommonUtil.constructUnknownErrorResponse("未知错误");
 		}
 		return CommonUtil.constructOKResponse("请求成功", list);
+	}
+	/**
+	 * 通过编号获取地址
+	 * @param addressId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="getAddressById",method=RequestMethod.POST)
+	@ResponseBody
+	public JSONObject getAddressById(@RequestParam(value="addressId",required=true)Integer addressId,
+			HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		Integer userId = user.getUserId();
+		Map<String,Object> map = null;
+		try {
+			map = addressService.getAddressById(addressId, userId);
+			if(map == null) {
+				return CommonUtil.constructArgErrorResponse("参数错误");
+			}
+		}catch (Exception e) {
+			return CommonUtil.constructDbErrorResponse("获取失败");
+		}
+		return CommonUtil.constructOKResponse("获取成功", map);
+		
+	}
+
+	@RequestMapping(value="getAddress", method=RequestMethod.POST)
+	@ResponseBody
+	public JSONObject getAddress(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		Integer userId = user.getUserId();
+		Map<String,Object> map = null;
+		try {
+			map = addressService.getAddress(userId);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return CommonUtil.constructOKResponse("成功", map);
 	}
 }

@@ -19,4 +19,31 @@ public interface UserService {
 	 * @return
 	 */
 	public boolean regist(UserRegistDto user);
+
+	/**
+	 * 发送验证码
+	 * @param userphone
+	 * @param code 0注册 1找回密码
+	 * @param codeType
+	 * @return
+	 */
+	public Boolean sendCode(String userphone, String code, Integer codeType);
+
+	/**
+	 * 找回密码
+	 * @param password
+	 * @param userphone
+	 * @return
+	 */
+	public boolean changePwd(String password, String userphone);
+
+	/**
+	 * 找回密码
+	 * @param userphone
+	 * @param oldPassword
+	 * @param newPassword
+	 * @return
+	 */
+	public boolean updatePassword(String userphone, String oldPassword, String newPassword);
+	
 }

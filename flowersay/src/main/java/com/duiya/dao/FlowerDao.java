@@ -23,4 +23,12 @@ public interface FlowerDao {
 	 * @return
 	 */
 	public int updateFlower(FlowerAddDto flower);
+	
+	/**
+	 * 创建订单时减少鲜花的库存
+	 * @param flowerId
+	 * @param count
+	 * @return
+	 */
+	public int reduceFlower(int flowerId,int count);
 }

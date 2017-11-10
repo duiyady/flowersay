@@ -1,5 +1,8 @@
 package com.duiya.service;
 
+import java.util.List;
+import java.util.Map;
+
 public interface ShopcarService {
 	/**
 	 * 添加购物车
@@ -23,6 +26,18 @@ public interface ShopcarService {
 	 * @param count
 	 * @return
 	 */
-	boolean updateShopcar(int userId, int shopcarId, int count);
+	boolean updateShopcar(int count, int userId, int shopcarId);
+	/**
+	 * 获取当前用户的购物车
+	 * @param userId
+	 * @return
+	 */
+	List<Map<String, Object>> getShopcar(int userId);
+	/**
+	 * 获得当前用户的购物车总数
+	 * @param userId
+	 * @return
+	 */
+	int shopcarCount(int userId);
 
 }

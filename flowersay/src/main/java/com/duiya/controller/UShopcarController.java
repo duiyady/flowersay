@@ -1,11 +1,16 @@
 package com.duiya.controller;
 
+
+import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,7 +25,7 @@ import com.duiya.service.ShopcarService;
 import com.duiya.utils.CommonUtil;
 
 /**
- * 用户购物车模块
+ * 这是用户购物车模块，包含添加购物车，修改购物车，删除购物车，获取所有购物车
  * @author duiya
  *
  */
@@ -29,83 +34,127 @@ import com.duiya.utils.CommonUtil;
 public class UShopcarController {
 	private Logger logger = LoggerFactory.getLogger(UShopcarController.class);
 	
-	@Resource(name="shopcarService")
+	@Resource(name = "shopcarService")
 	private ShopcarService shopcarService;
 	
 	/**
-	 * 添加购物车
-	 * @param flowerId
+	 * 获取购物车列表
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="addShopcar",method=RequestMethod.POST)
+	@RequestMapping(value = "/getShopcar", method = RequestMethod.POST)
 	@ResponseBody
-	private JSONObject addShopcar(@RequestParam(name="flowerId",required=true)Integer flowerId,
-			@RequestParam(name="count",required=true)Integer count,HttpSession session) {
-		User user = (User)session.getAttribute("user");
-		logger.info("invoke--------------------ushopcar/addShopcar?flowerId:"+flowerId+",userId:" + user.getUserId());
+	public JSONObject getShopcar(HttpSession session,HttpServletRequest request,HttpServletResponse response) {
+		User user = (User) session.getAttribute("user");
+		System.out.println("用户：" + user.getUsername()+"获取购物车,session为："+session.getId());
+		Integer userId = user.getUserId();
+		List<Map<String,Object>> list = null;
+		try {
+			list = shopcarService.getShopcar(userId);
+		}catch (Exception e) {
+			logger.error("failed to get shopCar", e);
+			return CommonUtil.constructDbErrorResponse("数据库错误");
+		}
+		return CommonUtil.constructOKResponse("获取成功", list);
+	}
+	
+	/**
+	 * 添加到购物车
+	 * @param flowerId 鲜花编号
+	 * @param count 鲜花数量
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/addShopcar", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject addShopcar(@RequestParam(value="flowerId",required=true)Integer flowerId,Integer count,HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		Integer userId = user.getUserId();
+		if(count == null) {
+			count = 1;
+		}
 		boolean flag = false;
 		try {
-			flag = shopcarService.addShopcar(user.getUserId(),flowerId,count);
+			flag = shopcarService.addShopcar(userId, flowerId, count);
 			if(flag == false) {
-				logger.error("failed add shopcar");
-				return CommonUtil.constructDbErrorResponse("添加失败");
+				return CommonUtil.constructUnknownErrorResponse("添加失败");
 			}
 		}catch (Exception e) {
-			logger.error("failed add shopcar", e);
-			return CommonUtil.constructUnknownErrorResponse("添加失败");
+			logger.error("failed to addshopcar", e);
+			return CommonUtil.constructDbErrorResponse("添加失败");
 		}
 		return CommonUtil.constructOKResponse("添加成功", null);
 	}
 	
 	/**
 	 * 删除购物车
-	 * @param flowerId
+	 * @param shopcarId 购物车中此条目的编号
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="deleteShopcar",method=RequestMethod.POST)
+	@RequestMapping(value = "/delShopcar", method = RequestMethod.POST)
 	@ResponseBody
-	private JSONObject deleteShopcar(@RequestParam(name="shopcarId",required=true)Integer shopcarId,HttpSession session) {
-		User user = (User)session.getAttribute("user");
-		logger.info("invoke--------------------ushopcar/deleteShopcar?shopcarId:"+shopcarId+",userId:" + user.getUserId());
+	public JSONObject delShopcar(@RequestParam(value="shopcarId",required=true)Integer shopcarId,HttpSession session){
+		User user = (User) session.getAttribute("user");
+		Integer userId = user.getUserId();
 		boolean flag = false;
 		try {
-			flag = shopcarService.deleteShopcar(user.getUserId(),shopcarId);
+			flag = shopcarService.deleteShopcar(userId, shopcarId);
 			if(flag == false) {
-				logger.error("failed delete shopcar");
-				return CommonUtil.constructDbErrorResponse("删除失败");
+				return CommonUtil.constructUnknownErrorResponse("删除失败");
 			}
 		}catch (Exception e) {
-			logger.error("failed delete shopcar", e);
-			return CommonUtil.constructUnknownErrorResponse("删除失败");
+			logger.error("failed to delete shopcar", e);
+			return CommonUtil.constructDbErrorResponse("删除失败");
 		}
+		System.out.println("删除成功");
 		return CommonUtil.constructOKResponse("删除成功", null);
 	}
 	
 	/**
-	 * 更新购物车
-	 * @param shopcarId
+	 * 修改购物车
+	 * @param shopcarId 购物车中次条目编号
+	 * @param count 鲜花数量
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="updateShopcar",method=RequestMethod.POST)
+	@RequestMapping(value = "/updateShopcar", method = RequestMethod.POST)
 	@ResponseBody
-	private JSONObject updateShopcar(@RequestParam(name="shopcarId",required=true)Integer shopcarId,
-			@RequestParam(name="count",required=true)Integer count,HttpSession session) {
-		User user = (User)session.getAttribute("user");
-		logger.info("invoke--------------------ushopcar/updateShopcar?shopcarId:"+shopcarId+",userId:" + user.getUserId());
+	public JSONObject updateShopcar(@RequestParam(value="shopcarId",required=true)Integer shopcarId,@RequestParam(value="count",required=true)Integer count,HttpSession session){
+		User user = (User) session.getAttribute("user");
+		Integer userId = user.getUserId();
 		boolean flag = false;
 		try {
-			flag = shopcarService.updateShopcar(user.getUserId(),shopcarId,count);
+			flag = shopcarService.updateShopcar(count, userId, shopcarId);
 			if(flag == false) {
-				logger.error("failed update shopcar");
-				return CommonUtil.constructDbErrorResponse("修改失败");
+				return CommonUtil.constructUnknownErrorResponse("未知错误");
 			}
 		}catch (Exception e) {
-			logger.error("failed update shopcar", e);
-			return CommonUtil.constructUnknownErrorResponse("修改失败");
+			logger.error("failed to update shopcar", e);
+			return CommonUtil.constructDbErrorResponse("修改失败");
 		}
 		return CommonUtil.constructOKResponse("修改成功", null);
+	}
+	/**
+	 * 修改购物车
+	 * @param shopcarId 购物车中次条目编号
+	 * @param count 鲜花数量
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/shopcarCount", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject shopcarCount(HttpSession session){
+		User user = (User) session.getAttribute("user");
+		//Integer userId = user.getUserId();
+		Integer userId = 2;
+		int count = 0;
+		try {
+			count = shopcarService.shopcarCount(userId);
+		}catch (Exception e) {
+			logger.error("failed to get shopcarCount", e);
+			return CommonUtil.constructDbErrorResponse("获取失败");
+		}
+		return CommonUtil.constructOKResponse("获取成功", count);
 	}
 }

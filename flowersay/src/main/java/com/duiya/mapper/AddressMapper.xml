@@ -4,7 +4,7 @@
 <mapper namespace="com.duiya.dao.AddressDao">
 	<insert id="addAddress" parameterType="com.duiya.dto.AddressAddDto">
 		insert into t_address(address_userid,address_receiver,address_phone,address_province,address_city,address_area,address_address)
-		valuse(#{addressUserid},#{addressReceiver},#{addressPhone},#{addressProvince},#{addressCity},#{addressArea},#{addressAddress})
+		values(#{addressUserid},#{addressReceiver},#{addressPhone},#{addressProvince},#{addressCity},#{addressArea},#{addressAddress})
 	</insert>
 	
 	<update id="updateAddress" parameterType="com.duiya.dto.AddressAddDto">
@@ -33,5 +33,32 @@
 	<delete id="deleteAddress" parameterType="int">
 		delete from t_address where address_id=#{0} and address_userid=#{1}
 	</delete>
+	
+	<select id="getAddressById" parameterType="int" resultType="map">
+		select
+		address_id as addressId,
+		address_receiver as addressReceiver,
+		address_phone as addressPhone,
+		address_province as addressProvince,
+		address_city as addressCity,
+		address_area as addressArea,
+		address_address as addressAddress
+		from t_address where address_id=#{0} and address_userid=#{1} 
+	</select>
+	
+	<select id="getAddress" parameterType="int" resultType="map">
+		select
+		address_id as addressId,
+		address_receiver as addressReceiver,
+		address_phone as addressPhone,
+		address_province as addressProvince,
+		address_city as addressCity,
+		address_area as addressArea,
+		address_address as addressAddress
+		from t_address
+		where address_userid=#{0}
+		limit 0,1 
+	
+	</select>
 
 </mapper>
