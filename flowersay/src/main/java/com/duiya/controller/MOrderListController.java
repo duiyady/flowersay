@@ -45,7 +45,7 @@ public class MOrderListController {
 		
 		int result = 0;
 		try {
-			result = orderService.updateState(state, orderId);
+			result = orderService.updateState(state, orderId,null);
 		}catch (Exception e) {
 			logger.error("update mstate failed", e);
 			return CommonUtil.constructDbErrorResponse("修改状态失败");

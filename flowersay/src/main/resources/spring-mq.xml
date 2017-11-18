@@ -18,7 +18,7 @@
 	<!-- 配置activeMQ -->
 	<!-- 配置JMS连接工厂 -->
 	<bean id="aconnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-		<property name="brokerURL" value="failover:(tcp://localhost:61616)" />
+		<property name="brokerURL" value="failover:(tcp://123.207.243.135:61616)" />
 	</bean>
 	<!-- 定义消息队列（Queue），我们监听一个新的队列 -->
 	<bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.duiya.dto.OrderAddDto;
 import com.duiya.dto.OrderSearchDto;
 import com.duiya.model.PageModel;
+import com.duiya.model.User;
 
 public interface OrderService {
 	/**
@@ -14,7 +15,7 @@ public interface OrderService {
 	 * @param orderId
 	 * @return
 	 */
-	public int updateState(int state, int orderId);
+	public int updateState(int state, int orderId,User user);
 
 	/**
 	 * 创建订单
@@ -34,10 +35,18 @@ public interface OrderService {
 	 * 删除订单
 	 * @param orderState
 	 * @param orderId
+	 * @param user
+	 * @return
+	 */
+	public boolean deleteOrder(Integer orderState, Integer orderId, User user);
+
+	/**
+	 * 提醒发货
+	 * @param orderId
 	 * @param userId
 	 * @return
 	 */
-	public boolean deleteOrder(Integer orderState, Integer orderId, int userId);
+	public boolean remindSale(Integer orderId, Integer userId);
 
 	
 	

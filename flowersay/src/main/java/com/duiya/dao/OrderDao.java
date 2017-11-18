@@ -3,6 +3,7 @@ package com.duiya.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 
 import com.duiya.dto.OrderAddDto;
 import com.duiya.dto.OrderListAddDto;
@@ -13,9 +14,10 @@ public interface OrderDao {
 	 * 更改状态
 	 * @param state
 	 * @param orderId
+	 * @param userId
 	 * @return
 	 */
-	public int updateMState(int orderState,int orderId);
+	public int updateMState(int orderState,int orderId,int uerId);
 	/**
 	 * 获取现在状态
 	 * @param orderId
@@ -60,11 +62,11 @@ public interface OrderDao {
 	public int insertOrder(OrderAddDto order);
 	
 	/**
-	 * 单条插入
-	 * @param orderList
+	 * 插入
+	 * @param list
 	 * @return
 	 */
-	public int inserOrderList(OrderListAddDto orderList);
+	public int inserOrderList(List<Map<String,Object>> list);
 	
 	/**
 	 * 删除订单
@@ -74,4 +76,20 @@ public interface OrderDao {
 	 * @return 
 	 */
 	public int deleteOrder(Integer orderState, Integer orderId, int userId);
+	
+	/**
+	 * 获取一个订单的商品信息
+	 * @param list
+	 * @param userId
+	 * @return
+	 */
+	public List<Map<String, Object>> getAllBuyCar(@Param("list")List<Integer> list, @Param("userId")Integer userId);
+	
+	/**
+	 * 通过编号和用户获取订单
+	 * @param orderId
+	 * @param userId
+	 * @return
+	 */
+	public String getOrderById(Integer orderId, Integer userId);
 }

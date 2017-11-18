@@ -5,8 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import com.duiya.model.FlowerHot;
 
+@Component("hotDao")
 public class HotDao {
 	public static FlowerLink head = new FlowerLink();
 	public static int count = 0;
@@ -72,7 +75,6 @@ class FlowerLink{
 	public FlowerLink() {
 		super();
 	}
-	
 }
 	
 	

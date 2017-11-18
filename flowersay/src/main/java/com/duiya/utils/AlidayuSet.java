@@ -35,6 +35,10 @@ public class AlidayuSet {
 	 * 找回密码
 	 */
 	public static String TemplateCode7;
+	/**
+	 * 退单通知
+	 */
+	public static String TemplateCode8;
 	static {
 		accessKeyId = PropertiesUtil.getALValue("accessKeyId");
 		accessKeySecret = PropertiesUtil.getALValue("accessKeySecret");
@@ -46,6 +50,7 @@ public class AlidayuSet {
 		TemplateCode5 = PropertiesUtil.getALValue("TemplateCode5");
 		TemplateCode6 = PropertiesUtil.getALValue("TemplateCode6");
 		TemplateCode7 = PropertiesUtil.getALValue("TemplateCode7");
+		TemplateCode8 = PropertiesUtil.getALValue("TemplateCode8");
 	}
 	
 }

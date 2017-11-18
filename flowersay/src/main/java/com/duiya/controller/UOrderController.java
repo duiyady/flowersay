@@ -40,11 +40,8 @@ import com.duiya.utils.EnumUtil;
 public class UOrderController {
 	private Logger logger = LoggerFactory.getLogger(UOrderController.class);
 	
-
-	
 	@Resource(name = "orderService")
 	private OrderService orderService;
-	
 	
 	/**
 	 * 创建订单
@@ -69,6 +66,7 @@ public class UOrderController {
 			}
 		}catch (Exception e) {
 			logger.error("failed to create order", e);
+			return CommonUtil.constructDbErrorResponse("数据库错误");
 		}
 		return CommonUtil.constructOKResponse("添加成功", orderMid);
 	}
@@ -86,10 +84,10 @@ public class UOrderController {
 			String msg = bindingResult.getFieldError().getField() + ":" + bindingResult.getFieldError().getDefaultMessage();
 			return CommonUtil.constructResponse(EnumUtil.ARG_ERROR, msg, null);
 		}
-		logger.info("invoke--------------------uorder/getAll?orderSearchDto:" + orderSearchDto);
-		//User user = (User)session.getAttribute("user");
-		//orderSearchDto.setUserId(user.getUserId());
-		orderSearchDto.setUserId(1);
+		logger.info("invoke--------------------uorder/getOrderList?orderSearchDto:" + orderSearchDto);
+		User user = (User)session.getAttribute("user");
+		orderSearchDto.setUserId(user.getUserId());
+		System.out.println(user.getUserId());
 		orderSearchDto.setStart((orderSearchDto.getPage()-1)*orderSearchDto.getCount());
 		PageModel page = null;
 		try {
@@ -114,16 +112,19 @@ public class UOrderController {
 	@RequestMapping(value = "updateState", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject updateState(@RequestParam(name="orderState",required=true)Integer orderState,
-			@RequestParam(name="orderId",required=true)Integer orderId) {
+			@RequestParam(name="orderId",required=true)Integer orderId,HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		logger.info("invoke--------------------uorder/updateState?orderId:" + orderId + " user:" + user.getUsername());
 		int result = -1;
 		try {
-			result = orderService.updateState(orderState, orderId);
+			result = orderService.updateState(orderState, orderId,user);
 			if(result == 1) {
 				return CommonUtil.constructOKResponse("成功", null);
 			}else {
 				return CommonUtil.constructDbErrorResponse("数据库错误");
 			}
 		}catch (Exception e) {
+			logger.error("failed to updateState",e);
 			return CommonUtil.constructDbErrorResponse("数据库错误");
 		}
 	}
@@ -133,15 +134,33 @@ public class UOrderController {
 	public JSONObject deleteOrder(@RequestParam(name="orderState",required=true)Integer orderState,
 			@RequestParam(name="orderId",required=true)Integer orderId,HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		int userId = user.getUserId();
+		logger.info("invoke--------------------uorder/deleteOrder?orderId:" + orderId + " user:" + user.getUsername());
 		boolean flag = false;
 		try {
-			flag = orderService.deleteOrder(orderState,orderId,userId);
+			flag = orderService.deleteOrder(orderState,orderId,user);
 		}catch (Exception e) {
+			logger.error("failed to deleteOrder",e);
 			return CommonUtil.constructDbErrorResponse("数据库错误");
 		}
-		
 		return null;
 	}
 
+	@RequestMapping(value = "remindSale", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject remindSale(@RequestParam(name="orderId",required=true)Integer orderId,HttpSession session) {
+		User user = (User)session.getAttribute("user");
+		logger.info("invoke--------------------morder/remindSale?orderId:" + orderId + "==user:" + user.getUserId());
+		boolean flag = false;
+		try {
+			flag = orderService.remindSale(orderId,user.getUserId());
+			if(flag == true) {
+				return CommonUtil.constructOKResponse("完成", null);
+			}else {
+				return CommonUtil.constructUnknownErrorResponse("失败");
+			}
+		}catch (Exception e) {
+			logger.error("failed to send message", e);
+			return CommonUtil.constructUnknownErrorResponse("失败");
+		}
+	}
 }

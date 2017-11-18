@@ -45,5 +45,19 @@ public interface UserService {
 	 * @return
 	 */
 	public boolean updatePassword(String userphone, String oldPassword, String newPassword);
+
+	/**
+	 * 修改用户名
+	 * @param username
+	 * @param userId
+	 * @return
+	 */
+	public boolean updateName(String username, Integer userId);
+
+	/**
+	 * 退出
+	 * @param userId
+	 */
+	public void logout(Integer userId);
 	
 }

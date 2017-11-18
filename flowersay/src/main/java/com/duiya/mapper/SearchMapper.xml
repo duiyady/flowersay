@@ -6,6 +6,7 @@
 		flower_id as flowerId,
 		flower_name as flowerName,
 		flower_price as flowerPrice,
+		flower_discountprice as flowerDiscountPrice,
 		flower_count as flowerCount,
 		flower_picture as flowerPicture,
 		flower_describe as flowerDescribe,
@@ -26,6 +27,12 @@
 				or flower_use=#{flowerUse}
 			</if>
 		</where>
+		<if test="price != null and sale == null">
+			order by flower_price ${price}
+		</if>
+		<if test="price == null and sale != null">
+			order by flower_sales ${sale}
+		</if>
 		limit #{start},#{count}
 	</select>
 	
@@ -63,15 +70,7 @@
 		from t_flower where flower_id=#{0}
 	</select>
 	
-	<select id="searchFlowerTest" resultType="map">
-		select
-		flower_id as flowerId,
-		flower_picture as flowerPicture,
-		flower_name as flowerName,
-		flower_price as flowerPrice,
-		flower_discountprice as flowerDiscountPrice
-		from t_flower
-	</select>
+	
 
 	<select id="getMHot" resultType="map">
 		select
@@ -94,7 +93,7 @@
 		flower_discountprice as flowerDiscountPrice
 		from t_flower where flower_state=1
 		order by flower_addtime desc
-		limit 0,5
+		limit 0,10
 	</select>
 	
 	<select id="getDiscount" resultType="map">
@@ -106,6 +105,25 @@
 		flower_discountprice as flowerDiscountPrice
 		from t_flower
 		where flower_state=1 and flower_discountprice is not null
-		limit 0,5
+		limit 0,10
+	</select>
+	
+	<select id="getOftenbuyCount" parameterType="int" resultType="int">
+		select count(*) as allCount from t_oftenbuy where user_id=#{0}
+	</select>
+	
+	<select id="getOftenbuy" parameterType="com.duiya.dto.FlowerSearchDto" resultType="map">
+		select
+		t_flower.flower_id as flowerId,
+		t_flower.flower_name as flowerName,
+		t_flower.flower_price as flowerPrice,
+		t_flower.flower_discountprice as flowerDiscountPrice,
+		t_flower.flower_count as flowerCount,
+		t_flower.flower_picture as flowerPicture,
+		t_flower.flower_describe as flowerDescribe,
+		t_flower.flower_classify as flowerClassify,
+		t_flower.flower_state as flowerState
+		from t_oftenbuy,t_flower where t_flower.flower_id = t_oftenbuy.flower_id and user_id=#{userId}
+		limit #{start},#{count}
 	</select>
 </mapper>

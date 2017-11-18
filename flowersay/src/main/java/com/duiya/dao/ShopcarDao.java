@@ -3,6 +3,9 @@ package com.duiya.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
+
 public interface ShopcarDao {
 	/**
 	 * 添加购物车
@@ -39,12 +42,24 @@ public interface ShopcarDao {
 	 * @return
 	 */
 	int shopcarCount(int userId);
+	
 	/**
 	 * 判断是否有这个购物车条目，防止重复添加
+	 * @param table
 	 * @param userId
 	 * @param flowerId
 	 * @return
 	 */
-	int addTemp(int userId, int flowerId);
+	int addTemp(@Param("table")String table, @Param("userId")int userId, @Param("flowerId")int flowerId);
+	
+	/**
+	 * 添加常购单
+	 * @param userId
+	 * @param flowerId
+	 * @return
+	 */
+	int addOftenbuy(Integer userId, Integer flowerId);
+	
+	
 
 }

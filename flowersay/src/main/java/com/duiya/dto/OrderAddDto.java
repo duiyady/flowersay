@@ -20,7 +20,8 @@ public class OrderAddDto {
 	@Max(3)
 	private Integer orderState;//订单状态 0在线支付未付款 1货到付款 2已付款 3待发货 4在配送 5完成
 	private String orderMess;//用户的留言
-	private List<OrderListAddDto> orderList;
+	@NotNull
+	private List<Integer> buycarIdList;
 	/**
 	 * @return the orderPrice
 	 */
@@ -106,28 +107,19 @@ public class OrderAddDto {
 		this.orderMess = orderMess;
 	}
 	/**
-	 * @return the orderList
+	 * @return the buycarIdList
 	 */
-	public List<OrderListAddDto> getOrderList() {
-		return orderList;
+	public List<Integer> getBuycarIdList() {
+		return buycarIdList;
 	}
 	/**
-	 * @param orderList the orderList to set
+	 * @param buycarIdList the buycarIdList to set
 	 */
-	public void setOrderList(List<OrderListAddDto> orderList) {
-		this.orderList = orderList;
-	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "OrderAddDto [orderPrice=" + orderPrice + ", orderId=" + orderId + ", orderMId=" + orderMId + ", userId="
-				+ userId + ", addressId=" + addressId + ", orderState=" + orderState + ", orderMess=" + orderMess
-				+ ", orderList=" + orderList + "]";
+	public void setBuycarIdList(List<Integer> buycarIdList) {
+		this.buycarIdList = buycarIdList;
 	}
 	public OrderAddDto(Float orderPrice, Integer orderId, String orderMId, Integer userId, Integer addressId,
-			Integer orderState, String orderMess, List<OrderListAddDto> orderList) {
+			Integer orderState, String orderMess, List<Integer> buycarIdList) {
 		super();
 		this.orderPrice = orderPrice;
 		this.orderId = orderId;
@@ -136,13 +128,20 @@ public class OrderAddDto {
 		this.addressId = addressId;
 		this.orderState = orderState;
 		this.orderMess = orderMess;
-		this.orderList = orderList;
+		this.buycarIdList = buycarIdList;
 	}
 	public OrderAddDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "OrderAddDto [orderPrice=" + orderPrice + ", orderId=" + orderId + ", orderMId=" + orderMId + ", userId="
+				+ userId + ", addressId=" + addressId + ", orderState=" + orderState + ", orderMess=" + orderMess
+				+ ", buycarIdList=" + buycarIdList + "]";
+	}
+
 }

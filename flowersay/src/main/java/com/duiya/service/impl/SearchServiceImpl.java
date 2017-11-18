@@ -37,10 +37,6 @@ public class SearchServiceImpl implements SearchService {
 		return searchDao.searchFlowerById(flowerId);
 	}
 
-	public List<Map<String,Object>> searchFlowerTest() {
-		return searchDao.searchFlowerTest();
-	}
-
 	public List<Map<String, Object>> searchFlowerIndex(int option) {
 		if(option == 0) {
 			return searchDao.getMHot();
@@ -49,6 +45,21 @@ public class SearchServiceImpl implements SearchService {
 		}else {
 			return searchDao.getDiscount();
 		}
+	}
+
+	public PageModel searchOftenbuy(FlowerSearchDto flowerSearchDto) {
+		int allCount = searchDao.getOftenbuyCount(flowerSearchDto.getUserId());
+		if(allCount == 0){
+			return null;
+		}
+		List<Map<String,Object>> infoList = searchDao.getOftenbuy(flowerSearchDto);
+		PageModel infoPage = new PageModel();
+		infoPage.setCount(infoList.size());
+		infoPage.setPage(flowerSearchDto.getPage());
+		infoPage.setAllPage((allCount+flowerSearchDto.getCount()-1)/flowerSearchDto.getCount());
+		infoPage.setAllCount(allCount);
+		infoPage.setDataList(infoList);
+		return infoPage;
 	}
 
 }

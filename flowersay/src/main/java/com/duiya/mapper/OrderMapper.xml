@@ -36,21 +36,40 @@
 		values (#{orderMId},#{orderPrice},#{userId},#{addressId},#{orderState},#{orderMess})
 	</insert>
 	
-	<insert id="inserOrderList" parameterType="com.duiya.dto.OrderListAddDto">
-		insert into t_orderlist(order_id, flower_id, orderlist_count, orderlist_price)
-		values(#{orderId},#{flowerId},#{orderlistCount},#{orderlistPrice})
-	</insert>
+	<insert id="inserOrderList"  parameterType="java.util.List">  
+        insert into t_orderlist(order_id, flower_id, orderlist_count, orderlist_price) values 
+        <foreach collection="list" item="item" index="index" separator="," >  
+           (#{item.orderId},#{item.flowerId},#{item.flowerCount},#{item.flowerPrice})  
+        </foreach>  
+    </insert>  
 	
 	<select id="getMState" parameterType="int" resultType="int">
 		select order_state from t_order where order_id=#{0}
 	</select>
 	
 	<update id="updateMState" parameterType="int">
-		update t_order set order_state=#{0} where order_id=#{1}
+		update t_order set order_state=#{0} where order_id=#{1} and user_id=#{2}
 	</update>
 	
 	<delete id="deleteOrder" parameterType="int">
-		delete from t_order where order_state=#{0},order_id=#{1},user_id=#{2}
+		delete from t_order where order_state=#{0} and order_id=#{1} and user_id=#{2}
 	</delete>
 
+	<select id="getAllBuyCar" resultType="map">
+		select t_shopcar.`flower_id` AS flowerId,
+		t_shopcar.`shopcar_count` AS flowerCount,
+		t_flower.`flower_price` AS flowerPrice,
+		t_flower.`flower_discountprice` AS flowerDPrice
+		FROM t_flower,t_shopcar 
+		WHERE t_shopcar.`user_id`=#{userId} and t_shopcar.`flower_id` = t_flower.`flower_id`
+		and t_shopcar.`shopcar_id` in
+		 <foreach collection="list" item="list" index="index"  
+            open="(" close=")" separator=",">  
+            #{list}  
+        </foreach>  
+	</select>
+	
+	<select id="getOrderById" resultType="String">
+		select order_mid as orderMid from t_order where order_id=#{0} and user_id=#{1}
+	</select>
 </mapper>

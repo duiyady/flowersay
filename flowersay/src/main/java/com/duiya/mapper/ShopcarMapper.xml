@@ -31,7 +31,11 @@
 		select count(*) from t_shopcar where user_id=#{0}
 	</select>
 	
-	<select id="addTemp" parameterType="int" resultType="int">
-		select count(*) from t_shopcar where user_id=#{0} and flower_id=#{1}
+	<select id="addTemp" resultType="int">
+		select count(*) from ${table} where user_id=#{userId} and flower_id=#{flowerId}
 	</select>
+	
+	<insert id="addOftenbuy" parameterType="int">
+		insert into t_oftenbuy(user_id,flower_id) values (#{0},#{1})
+	</insert>
 </mapper>

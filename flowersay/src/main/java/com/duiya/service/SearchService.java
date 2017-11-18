@@ -22,15 +22,16 @@ public interface SearchService {
 	public Map<String, Object> searchFlowerById(int flowerId);
 
 	/**
-	 * 测试
-	 * @return
-	 */
-	public List<Map<String,Object>> searchFlowerTest();
-
-	/**
 	 * 获取最新最热打折这几个
 	 * @param option
 	 * @return
 	 */
 	public List<Map<String, Object>> searchFlowerIndex(int option);
+	
+	/**
+	 * 获取用户常购单
+	 * @param flowerSearchDt
+	 * @return
+	 */
+	public PageModel searchOftenbuy(FlowerSearchDto flowerSearchDto);
 }

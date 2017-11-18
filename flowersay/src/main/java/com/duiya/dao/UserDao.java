@@ -2,6 +2,8 @@ package com.duiya.dao;
 
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.duiya.dto.UserRegistDto;
 import com.duiya.model.User;
 
@@ -26,4 +28,19 @@ public interface UserDao {
 	 * @return
 	 */
 	public int changePwd(String password,String userphone);
+	
+	/**
+	 * 修改用户名
+	 * @param username
+	 * @param userId
+	 * @return
+	 */
+	public int updateName(@Param("username")String username,@Param("userId")Integer userId);
+	
+	/**
+	 * 改变登录状态
+	 * @param state
+	 * @param userId
+	 */
+	public void setState(@Param("state")Integer state, @Param("userId")Integer userId);
 }

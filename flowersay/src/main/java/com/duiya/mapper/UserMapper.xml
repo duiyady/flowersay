@@ -17,5 +17,13 @@
 		update t_user set user_password=#{0} where user_phone=#{1}
 	</update>
 	
+	<update id="updateName">
+		update t_user set user_name=#{username} where user_id=#{userId}
+	</update>
+	
+	<update id="setState">
+		update t_user set user_state=#{state} where user_id=#{userId}
+	</update>
+	
 	
 </mapper>

@@ -15,12 +15,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.duiya.dao.OrderDao;
 import com.duiya.model.Mail;
 import com.duiya.utils.MailSender;
+import com.duiya.utils.PhoneUtil;
 
 public class QueueMessageListener implements MessageListener {
 	private Logger logger = LoggerFactory.getLogger(QueueMessageListener.class);
 
-	@Autowired
-	private OrderDao orderDao;
 	@Autowired
 	private MailSender mailSender;
 
@@ -29,33 +28,52 @@ public class QueueMessageListener implements MessageListener {
 		TextMessage tm = (TextMessage) message;
 		try {
 			logger.info("ConsumerMessageListener收到了文本消息：\t" + tm.getText());
-			/**
-			 * 消息内容: {"orderId": "aaa"}
-			 */
-			//JSONObject jb = JSONObject.parseObject(tm.getText());
-
-			//String orderId = jb.get("orderId").toString();
-			//Map<String, Object> orderInfo = orderDao.getOrderInfoForCallManage(orderId);
-			//Map<String, Object> orderInfo = null;
-//			System.out.println(orderInfo);
-
-			//if (orderInfo == null) {
-			//	logger.error("错误消息：查不到此订单：" + tm.getText());
-			//}
-
-//			String mailMsg = "用户：" + orderInfo.get("user_name") + " 于 " + orderInfo.get("pay_time") + " (userId:"
-//					+ orderInfo.get("user_id") + ";openId:" + orderInfo.get("openId") + ")" + "购买了咨询家:"
-//					+ orderInfo.get("tutor_name") + " [" + orderInfo.get("order_num") + "] 个订单。总价："
-//					+ orderInfo.get("order_price") + "。用户的联系方式是：" + orderInfo.get("user_phone")
-//					+ "。请运营人员尽快与用户联系。喵~~~~~~";
-			String mailMsg = "测试邮件";
-			Mail mail = new Mail();
-			mail.setContentText(mailMsg);
-			//mail.setTo(orderInfo.get("managerMail").toString());
-			mail.setSubject("有人下订单啦！");
-			mail.setTo("duiyady@163.com");
-			mailSender.sendSimpleMail(mail);
-			logger.info("---->成功消费");
+			JSONObject jb = JSONObject.parseObject(tm.getText());
+			int code = Integer.valueOf(jb.get("code").toString());
+			//11是发送短信
+			if(code == 11) {
+				Map map = (Map) jb.get("message");
+				PhoneUtil.sendCodeSms(map);
+			}else if(code == 1) {//code == 1 提醒发货
+				String mess = jb.get("message").toString();
+				String mailMsg = "订单号为：" + mess + "的金主爸爸催你发单了,快去处理吧";
+				Mail mail = new Mail();
+				mail.setContentText(mailMsg);
+				//mail.setTo(orderInfo.get("managerMail").toString());
+				mail.setSubject("金主催单了");
+				mail.setTo("duiyady@163.com");
+				mailSender.sendSimpleMail(mail);
+				logger.info("---->成功消费");
+			}else if(code == 2){//2为有新订单了
+				String mess = jb.get("message").toString();
+				String mailMsg = "有新订单了，订单号为:" + mess + ",快去处理吧！！！！";
+				Mail mail = new Mail();
+				mail.setContentText(mailMsg);
+				//mail.setTo(orderInfo.get("managerMail").toString());
+				mail.setSubject("有人下单 了");
+				mail.setTo("duiyady@163.com");
+				mailSender.sendSimpleMail(mail);
+				logger.info("---->成功消费");
+			}else if(code == 3) {//3有人退单
+				String mess = jb.get("message").toString();
+				String mailMsg = "有退单了，订单号为:" + mess + "取消了订单，快去处理吧";
+				Mail mail = new Mail();
+				mail.setContentText(mailMsg);
+				//mail.setTo(orderInfo.get("managerMail").toString());
+				mail.setSubject("有人退单 了");
+				mail.setTo("duiyady@163.com");
+				mailSender.sendSimpleMail(mail);
+				logger.info("---->成功消费");
+			}else if(code == 4) {//收货了
+				String mess = jb.get("message").toString();
+				String mailMsg = "订单号为：" + mess + "的订单确认到达客户手中了";
+				Mail mail = new Mail();
+				mail.setContentText(mailMsg);
+				mail.setSubject("有人退单 了");
+				mail.setTo("duiyady@163.com");
+				mailSender.sendSimpleMail(mail);
+				logger.info("---->成功消费");
+			}
 		} catch (JMSException e) {
 			logger.error("消费消息失败了", e);
 			e.printStackTrace();

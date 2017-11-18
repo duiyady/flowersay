@@ -71,7 +71,6 @@ public class UserController {
 					//返回管理员的首页
 					return CommonUtil.constructOKResponse("登录成功", null);
 				}else {
-					System.out.println("用户：" + user.getUsername()+"登录,session为："+session.getId());
 					//返回index.html
 					return CommonUtil.constructOKResponse("登录成功", null);
 				}
@@ -158,7 +157,14 @@ public class UserController {
 	@RequestMapping(value="logout", method=RequestMethod.POST)
 	@ResponseBody
 	public JSONObject logout(HttpSession session) {
-		session.removeAttribute("user");
+		logger.info("invoke--------------------user/logout");
+		User user = (User)session.getAttribute("user");
+		try {
+			userService.logout(user.getUserId());
+			session.removeAttribute("user");
+		}catch (Exception e) {
+			logger.error("failed to logout",e);
+		}
 		return CommonUtil.constructOKResponse("退出成功", null);
 	}
 	/**
@@ -223,7 +229,6 @@ public class UserController {
 	public JSONObject updatePassword(@RequestParam(value = "oldPassword",required = true)String oldPassword, 
 			@RequestParam(value = "newPassword",required = true)String newPassword, 
 			HttpSession session) {
-		System.out.println("xiugaimima");
 		User user = (User) session.getAttribute("user");
 		String userphone = user.getUserphone();
 		boolean flag = false;
@@ -233,8 +238,32 @@ public class UserController {
 				return CommonUtil.constructUnknownErrorResponse("修改失败");
 			}
 		}catch (Exception e) {
-			e.printStackTrace();
 			logger.error("failed to updatePassword", e);
+			return CommonUtil.constructDbErrorResponse("修改失败");
+		}
+		return CommonUtil.constructOKResponse("修改成功", null);
+	}
+
+	/**
+	 * 修改用户名
+	 * @param username
+	 * @return
+	 */
+	@RequestMapping(value="updateName", method=RequestMethod.POST)
+	@ResponseBody
+	public JSONObject updateName(@RequestParam(value = "username",required = true)String username,HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		boolean flag = false;
+		try {
+			flag = userService.updateName(username,user.getUserId());
+			if(flag == false) {
+				return CommonUtil.constructUnknownErrorResponse("修改失败");
+			}
+			user.setUsername(username);
+			session.removeAttribute("user");
+			session.setAttribute("user", user);
+		}catch (Exception e) {
+			logger.error("failed to updateName", e);
 			return CommonUtil.constructDbErrorResponse("修改失败");
 		}
 		return CommonUtil.constructOKResponse("修改成功", null);

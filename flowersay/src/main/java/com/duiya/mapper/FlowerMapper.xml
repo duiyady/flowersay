@@ -25,7 +25,7 @@
 	</update>
 	
 	<update id="reduceFlower">
-		update t_flower set flower_count=flower_count-#{1} where flower_count>#{1} and flower_id=#{0} 
+		update t_flower set flower_count=flower_count-#{1},flower_sales=flower_sales+#{1} where flower_count>#{1} and flower_id=#{0} 
 	</update>
 
 </mapper>

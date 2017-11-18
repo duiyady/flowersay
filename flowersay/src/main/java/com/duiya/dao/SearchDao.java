@@ -25,11 +25,7 @@ public interface SearchDao {
 	 * @return
 	 */
 	public Map<String, Object> searchFlowerById(int flowerId);
-	/**
-	 * 测试
-	 * @return
-	 */
-	public List<Map<String,Object>> searchFlowerTest();
+	
 	/**
 	 * 获取最热
 	 * @return
@@ -45,4 +41,18 @@ public interface SearchDao {
 	 * @return
 	 */
 	public List<Map<String, Object>> getDiscount();
+	
+	/**
+	 * 获取常购清单总数
+	 * @param userId
+	 * @return
+	 */
+	public int getOftenbuyCount(int userId);
+	
+	/**
+	 * 获取常购清单
+	 * @param flowerSearchDt
+	 * @return
+	 */
+	public List<Map<String,Object>> getOftenbuy(FlowerSearchDto flowerSearchDt);
 }

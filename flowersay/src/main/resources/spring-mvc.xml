@@ -42,7 +42,7 @@
 		<property name="maxUploadSize" value="5242440" />
 	</bean>
 	
- 	<!-- <mvc:interceptors>
+ 	<mvc:interceptors>
 		<bean class="com.duiya.interceptor.LoginInterceptor"></bean>
-	</mvc:interceptors> -->
+	</mvc:interceptors>
 </beans>

@@ -12,13 +12,14 @@ public class FlowerSearchDto {
 	private Integer flowerState;//鲜花状态
 	private String flowerUse;//鲜花用途
 	private String message;//关键字
+	private Integer userId;//用户编号
 	@Min(1)
 	private int page = 1;//第几页
 	@Min(1)
 	private int count = 5;//每页显示几条数据
 	private int start = 0;// 起始查询条数
-	private Integer price;//价格顺序，默认无序  1升序
-	private Integer sale;//销量排序，默认无序 1升序
+	private String price;//价格顺序，默认无序  1升序 desc降序 asc升序
+	private String sale;//销量排序，默认无序 1升序
 	/**
 	 * @return the flowerClassify
 	 */
@@ -32,6 +33,18 @@ public class FlowerSearchDto {
 		if(!flowerClassify.equals("")) {
 			this.flowerClassify = flowerClassify;
 		}
+	}
+	/**
+	 * @return the userId
+	 */
+	public Integer getUserId() {
+		return userId;
+	}
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	/**
 	 * @return the flowerState
@@ -112,25 +125,25 @@ public class FlowerSearchDto {
 	/**
 	 * @return the price
 	 */
-	public Integer getPrice() {
+	public String getPrice() {
 		return price;
 	}
 	/**
 	 * @param price the price to set
 	 */
-	public void setPrice(Integer price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 	/**
 	 * @return the sale
 	 */
-	public Integer getSale() {
+	public String getSale() {
 		return sale;
 	}
 	/**
 	 * @param sale the sale to set
 	 */
-	public void setSale(Integer sale) {
+	public void setSale(String sale) {
 		this.sale = sale;
 	}
 	/* (non-Javadoc)
@@ -143,7 +156,7 @@ public class FlowerSearchDto {
 				+ ", price=" + price + ", sale=" + sale + "]";
 	}
 	public FlowerSearchDto(String flowerClassify, Integer flowerState, String flowerUse, String message, int page,
-			int count, int start, Integer price, Integer sale) {
+			int count, int start, String price, String sale) {
 		super();
 		this.flowerClassify = flowerClassify;
 		this.flowerState = flowerState;

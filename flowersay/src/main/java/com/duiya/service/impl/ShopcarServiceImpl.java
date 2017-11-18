@@ -17,7 +17,8 @@ public class ShopcarServiceImpl implements ShopcarService {
 
 	public boolean addShopcar(int userId, int flowerId, int count) {
 		int flag = 0;
-		int flag1 = shopcarDao.addTemp(userId, flowerId);
+		//判断是否有这个购物车项
+		int flag1 = shopcarDao.addTemp("t_shopcar", userId, flowerId);
 		if(flag1 == 0) {
 			flag = shopcarDao.addShopcar(userId, flowerId, count);
 			if(flag > 0) {
@@ -56,6 +57,22 @@ public class ShopcarServiceImpl implements ShopcarService {
 
 	public int shopcarCount(int userId) {
 		return shopcarDao.shopcarCount(userId);
+	}
+
+	public boolean addOftenbuy(Integer userId, Integer flowerId) {
+		int flag = 0;
+		//判断是否有这个购物车项
+		int flag1 = shopcarDao.addTemp("t_oftenbuy", userId, flowerId);
+		if(flag1 == 0) {
+			flag = shopcarDao.addOftenbuy(userId, flowerId);
+			if(flag > 0) {
+				return true;
+			}else {
+				return false;
+			}
+		}else {
+			return false;
+		}
 	} 
 	
 

@@ -39,5 +39,13 @@ public interface ShopcarService {
 	 * @return
 	 */
 	int shopcarCount(int userId);
+	
+	/**
+	 * 添加常购单
+	 * @param userId
+	 * @param flowerId
+	 * @return
+	 */
+	boolean addOftenbuy(Integer userId, Integer flowerId);
 
 }

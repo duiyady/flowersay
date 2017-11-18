@@ -18,7 +18,7 @@ public class B {
 		        // ConnectionFactory ：连接工厂，JMS 用它创建连接  
 		        ConnectionFactory connectionFactory =  
 		            new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_USER, ActiveMQConnection.DEFAULT_PASSWORD,  
-		                "tcp://localhost:61616");  
+		                "tcp://123.207.243.135:61616");  
 		        //JMS 客户端到JMS Provider 的连接  
 		        Connection connection = connectionFactory.createConnection();  
 		        connection.start();  

@@ -7,11 +7,14 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.duiya.dao.UserDao;
 import com.duiya.dto.UserRegistDto;
 import com.duiya.model.User;
+import com.duiya.mq.Producer;
 import com.duiya.service.UserService;
 import com.duiya.utils.AlidayuSet;
 import com.duiya.utils.MD5Util;
@@ -25,10 +28,17 @@ public class UserServiceImpl implements UserService{
 	@Resource(name="userDao")
 	private UserDao userDao;
 	
+	@Autowired
+	private Producer producer;
+	
 	
 	public User login(String userphone, String password) {
 		String npassword = MD5Util.generateCheckString(password);
-		return userDao.login(userphone, npassword);
+		User user = userDao.login(userphone, npassword);
+		if(user != null) {
+			userDao.setState(1,user.getUserId());
+		}
+		return user;
 	}
 
 	public boolean regist(UserRegistDto user) {
@@ -51,7 +61,12 @@ public class UserServiceImpl implements UserService{
 		}else {
 			msg.put("templateCode", AlidayuSet.TemplateCode7);
 		}
-		return PhoneUtil.sendCodeSms(msg);
+		JSONObject js = new JSONObject();
+		js.put("code", 11);
+		js.put("message", msg);
+		producer.sendMessage(js.toJSONString());
+		return true;
+		//return PhoneUtil.sendCodeSms(msg);
 	}
 
 	public boolean changePwd(String password, String userphone) {
@@ -76,6 +91,18 @@ public class UserServiceImpl implements UserService{
 			}
 		}
 		return false;
+	}
+
+	public boolean updateName(String username, Integer userId) {
+		int flag = userDao.updateName(username, userId);
+		if(flag > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public void logout(Integer userId) {
+		userDao.setState(0,userId);
 	}
 
 	
