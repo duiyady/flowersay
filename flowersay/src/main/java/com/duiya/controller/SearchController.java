@@ -80,7 +80,7 @@ public class SearchController {
 				flowerSearchDto.setSale(null);
 			}
 		}
-		logger.info("invoke--------------------search/searchFlower");
+		logger.info("invoke--------------------search/searchFlower  " + flowerSearchDto);
 		flowerSearchDto.setStart((flowerSearchDto.getPage() - 1) * flowerSearchDto.getCount());
 		PageModel flowerPage = null;
 		User user = (User)session.getAttribute("user");

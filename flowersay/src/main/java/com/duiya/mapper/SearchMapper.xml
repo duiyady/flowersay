@@ -24,7 +24,7 @@
 				or flower_classify=#{flowerClassify}
 			</if>
 			<if test="flowerUse != null">
-				or flower_use=#{flowerUse}
+				or flower_use like concat(concat("%",#{flowerUse}),"%")
 			</if>
 		</where>
 		<if test="price != null and sale == null">
@@ -49,7 +49,7 @@
 				or flower_classify=#{flowerClassify}
 			</if>
 			<if test="flowerUse != null">
-				or flower_use=#{flowerUse}
+				or flower_use like concat(concat("%",#{flowerUse}),"%")
 			</if>
 		</where>
 	</select>

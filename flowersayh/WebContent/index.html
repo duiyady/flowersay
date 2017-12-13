@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>对呀花语</title>
+<meta name="keywords"  content="KEYWORDS..." />
+<meta name="description" content="DESCRIPTION..." />
+<meta name="author" content="DeathGhost" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name='apple-touch-fullscreen' content='yes'>
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="address=no">
+<meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script src="js/jquery.js"></script>
+<script src="js/swiper.min.js"></script>
+<script src="js/default.js"></script>
+<script src="js/index.js"></script>
+
+</head>
+<body>
+<!--header-->
+<header>
+<a href="search.html" class="rt_searchIcon">&#37;</a>
+</header>
+<div style="height:1rem;"></div>
+<!--slide-->
+<div id="slide">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">
+     <a href="#">
+      <img src="images/1.jpg"/>
+     </a>
+    </div>
+    <div class="swiper-slide">
+     <a href="#">
+      <img src="images/2.jpg"/>
+     </a>
+    </div>
+    <div class="swiper-slide">
+     <a href="#">
+      <img src="images/3.jpg"/>
+     </a>
+    </div>
+  </div>
+  <div class="pagination"></div>  
+</div>
+<!--categoryList-->
+<ul class="categoryLiIcon">
+ <!-- <li>
+  <a href="category.html">
+   <img src="upload/menu_bg_15.png"/>
+   <em>常购品</em>
+  </a>
+ </li> -->
+</ul>
+<!--Tab:productList-->
+<dl class="tab_proList">
+ <dt>
+  <a option="0">热门</a>
+  <a option="1">新品</a>
+  <a option="2">打折</a>
+ </dt>
+ <dd>
+  <ul>
+   <!-- <li>
+    <a href="product.html" class="goodsPic">
+     <img src="upload/goods001.jpg"/>
+    </a>
+    <div class="goodsInfor">
+     <h2>
+      <a href="product.html">新鲜生菜两斤装特惠</a>
+     </h2>
+     <p>
+      <del>5.90</del>
+     </p>
+     <p>
+      <strong class="price">3.90</strong>
+     </p>
+     <a class="addToCart">&#126;</a>
+    </div>
+   </li> -->
+  </ul>
+ </dd>
+ <dd>
+  <ul>
+  </ul>  
+ </dd>
+ <dd>
+  <ul>
+  </ul>
+ </dd>
+</dl>
+<!--floatCart-->
+<div class="hoverCart">
+ <a href="cart.html">0</a>
+</div>
+<div style="height:1.2rem;"></div>
+<nav>
+ <a href="index.html" class="homeIcon">首页</a>
+ <a href="category.html" class="categoryIcon">分类</a>
+ <a href="cart.html" class="cartIcon">购物车</a>
+ <a href="user.html" class="userIcon">我的</a>
+</nav>
+<script>
+  document.oncontextmenu=new Function("event.returnValue=false;");
+  document.onselectstart=new Function("event.returnValue=false;"); 
+</script>
+<script>
+$(document).ready(function(){
+	var mySwiper = new Swiper('#slide',{
+		  autoplay:5000,
+		  visibilityFullFit : true,
+		  loop:true,
+		  pagination : '.pagination',
+	  });
+	//product list:Tab
+	$(".tab_proList dd").eq(0).show().siblings(".tab_proList dd").hide();
+	$(".tab_proList dt a").eq(0).addClass("currStyle");
+	$(".tab_proList dt a").click(function(){
+		createFlower($(this).attr("option"));
+		var liindex = $(".tab_proList dt a").index(this);
+		$(this).addClass("currStyle").siblings().removeClass("currStyle");
+		$(".tab_proList dd").eq(liindex).fadeIn(150).siblings(".tab_proList dd").hide();
+	});
+   //飞入动画，具体根据实际情况调整
+  
+});
+</script>
+
+</body>
+</html>

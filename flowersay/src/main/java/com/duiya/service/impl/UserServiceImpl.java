@@ -53,26 +53,32 @@ public class UserServiceImpl implements UserService{
 	}
 
 	public Boolean sendCode(String userphone, String code, Integer codeType) {
-		Map<String, String> msg = new HashMap<String, String>();
-		msg.put("phoneNumber", userphone);
-		msg.put("code", code);
-		if(codeType == 0) {
-			msg.put("templateCode", AlidayuSet.TemplateCode6);
+		
+		int count = userDao.haveUser(userphone);
+		if((count == 0 && codeType == 0) || (count == 1 && codeType == 1)) {
+			Map<String, String> msg = new HashMap<String, String>();
+			msg.put("phoneNumber", userphone);
+			msg.put("code", code);
+			if(codeType == 0) {
+				msg.put("templateCode", AlidayuSet.TemplateCode6);
+			}else {
+				msg.put("templateCode", AlidayuSet.TemplateCode7);
+			}
+			JSONObject js = new JSONObject();
+			js.put("code", 11);
+			js.put("message", msg);
+			producer.sendMessage(js.toJSONString());
+			return true;
+	
 		}else {
-			msg.put("templateCode", AlidayuSet.TemplateCode7);
+			return false;
 		}
-		JSONObject js = new JSONObject();
-		js.put("code", 11);
-		js.put("message", msg);
-		producer.sendMessage(js.toJSONString());
-		return true;
-		//return PhoneUtil.sendCodeSms(msg);
 	}
-
+	
 	public boolean changePwd(String password, String userphone) {
 		int result = 0;
 		String npassword = MD5Util.generateCheckString(password);
-		result = userDao.changePwd(userphone,npassword);
+		result = userDao.changePwd(npassword,userphone);
 		if(result > 0) {
 			return true;
 		}else {

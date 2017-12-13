@@ -142,7 +142,11 @@ public class UOrderController {
 			logger.error("failed to deleteOrder",e);
 			return CommonUtil.constructDbErrorResponse("数据库错误");
 		}
-		return null;
+		if(flag == true) {
+			return CommonUtil.constructOKResponse("成功", null);
+		}else {
+			return CommonUtil.constructDbErrorResponse("数据库错误");
+		}
 	}
 
 	@RequestMapping(value = "remindSale", method = RequestMethod.POST)

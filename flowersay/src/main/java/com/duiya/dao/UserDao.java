@@ -22,7 +22,7 @@ public interface UserDao {
 	 */
 	public int regist(UserRegistDto user);
 	/**
-	 * 找回密码
+	 * 修改密码
 	 * @param password
 	 * @param userphone
 	 * @return
@@ -43,4 +43,11 @@ public interface UserDao {
 	 * @param userId
 	 */
 	public void setState(@Param("state")Integer state, @Param("userId")Integer userId);
+	
+	/**
+	 * 判断是否有此用户
+	 * @param userphone
+	 * @return
+	 */
+	public int haveUser(String userphone);
 }

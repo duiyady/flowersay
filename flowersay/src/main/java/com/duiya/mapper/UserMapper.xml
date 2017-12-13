@@ -17,6 +17,10 @@
 		update t_user set user_password=#{0} where user_phone=#{1}
 	</update>
 	
+	<select id="haveUser" parameterType="String" resultType="int">
+		select count(*) from t_user where user_phone=#{0}
+	</select>
+	
 	<update id="updateName">
 		update t_user set user_name=#{username} where user_id=#{userId}
 	</update>

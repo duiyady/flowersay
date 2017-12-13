@@ -1,6 +1,10 @@
 package com.duiya.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +25,8 @@ import com.duiya.utils.DefaultSet;
 import com.duiya.utils.EnumUtil;
 import com.duiya.utils.StringUtil;
 
+import sun.misc.BASE64Decoder;
+
 @Controller
 @RequestMapping("upload")
 public class PictureController {
@@ -29,15 +35,41 @@ public class PictureController {
 	@RequestMapping("flowerpicupload")
 	@ResponseBody
 	public JSONObject flowerpicUpload(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("sdfasga");
+		System.out.println(request.getParameter("photo"));
+		try {
+			byte[] photoimg = new BASE64Decoder().decodeBuffer(request.getParameter("photo"));    
+	        for (int i = 0; i < photoimg.length; ++i) {    
+	            if (photoimg[i] < 0) {    
+	                // 调整异常数据    
+	                photoimg[i] += 256;    
+	            }    
+	        }  
+			FileOutputStream out = new FileOutputStream(new File("E:\\a.jpg"));
+			//BufferedOutputStream ou = new BufferedOutputStream(out);
+			out.write(photoimg);
+			//char[] ch = request.getParameter("photo").toCharArray();
+			//for(int kk = 0;kk<ch.length;kk+) {
+			out.flush();
+			out.close();
+			
+			//}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		// 创建一个通用的多部分解析器
 		CommonsMultipartResolver cmr = new CommonsMultipartResolver(request.getSession().getServletContext());
 		// //判断 request 是否有文件上传,即多部分请求
 		if (cmr.isMultipart(request)) {
+			System.out.println("1");
 			// 转换成多部分
 			MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) request;
 			// //取得request中的所有文件名
 			Iterator<String> iter = mhsr.getFileNames();
 			while (iter.hasNext()) {
+				System.out.println("2");
 				// 取得上传文件
 				MultipartFile file = mhsr.getFile((String) iter.next());
 				// //取得当前上传文件的文件名称
@@ -62,6 +94,7 @@ public class PictureController {
 				try {
 					// transfer方法是MultipartFile包中提供的方法，直接可以写入文件到指定目录
 					file.transferTo(file3);
+					System.out.println("3");
 					JSONObject jo = new JSONObject();
 					return CommonUtil.constructResponse(EnumUtil.OK, "成功", file3.getAbsolutePath());
 				} catch (Exception e) {

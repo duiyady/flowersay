@@ -1,9 +1,12 @@
 package com.duiya.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.duiya.model.Flower;
 import com.duiya.model.TypeList;
 import com.duiya.model.User;
 import com.duiya.service.BaseService;
 import com.duiya.utils.CommonUtil;
+import com.sun.media.sound.FFT;
+import com.sun.net.httpserver.HttpContext;
 
 
 /**
@@ -80,4 +86,5 @@ public class BaseController {
 		}
 		return CommonUtil.constructResponse(OKCODE, "查询成功", list);
 	}
+
 }
